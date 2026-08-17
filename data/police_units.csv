@@ -1,0 +1,11 @@
+unit_id,unit_name,station,status,latitude,longitude
+UNIT001,Patrol Unit 01,Sitabuldi,available,21.1458,79.0882
+UNIT002,Patrol Unit 02,Dharampeth,available,21.1456,79.0634
+UNIT003,Patrol Unit 03,Ajni,available,21.1177,79.0847
+UNIT004,Patrol Unit 04,Sadar,available,21.1667,79.0800
+UNIT005,Patrol Unit 05,Pratap Nagar,available,21.1075,79.0780
+UNIT006,Patrol Unit 06,Hingna,available,21.1167,78.9500
+UNIT007,Patrol Unit 07,Imamwada,available,21.1239,79.0936
+UNIT008,Patrol Unit 08,Airport,available,21.0870,79.0720
+UNIT009,Patrol Unit 09,Sitabuldi,deployed,21.1458,79.0882
+UNIT010,Patrol Unit 10,Ajni,available,21.1177,79.0847

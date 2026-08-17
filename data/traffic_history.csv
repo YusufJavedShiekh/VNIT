@@ -1,0 +1,25 @@
+location_id,hour,day_of_week,vehicle_count,average_speed_kmh,traffic_density,accident_count,risk_score
+NGP001,8,0,42,28,High,2,78
+NGP001,12,0,48,35,High,1,68
+NGP001,18,0,72,21,Very High,3,92
+NGP002,8,1,38,42,Medium,0,42
+NGP002,12,1,45,45,Medium,0,38
+NGP002,18,1,65,31,High,1,70
+NGP003,8,2,22,52,Low,0,24
+NGP003,12,2,28,55,Low,0,20
+NGP003,18,2,44,43,Medium,0,45
+NGP004,8,3,80,19,Very High,4,96
+NGP004,12,3,62,26,High,2,78
+NGP004,18,3,91,17,Very High,5,99
+NGP005,8,4,25,48,Low,0,18
+NGP005,12,4,30,50,Low,0,16
+NGP005,18,4,52,38,Medium,1,55
+NGP006,8,5,55,33,High,1,64
+NGP006,12,5,40,44,Medium,0,36
+NGP006,18,5,76,24,Very High,2,86
+NGP007,8,6,32,46,Medium,0,30
+NGP007,12,6,35,48,Medium,0,27
+NGP007,18,6,58,35,High,1,61
+NGP008,8,0,70,25,High,2,82
+NGP008,12,0,55,32,High,1,67
+NGP008,18,0,95,15,Very High,5,100
