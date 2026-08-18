@@ -1,0 +1,3250 @@
+[
+  {
+    "analysis_id": "8d38945d-1f91-43e4-9260-3689bba085b1",
+    "filename": "78c2db6ad39a49b5a18e1039bfa8d41c_14739246_1080_1920_59fps.mp4",
+    "original_filename": "14739246_1080_1920_59fps.mp4",
+    "area": "Sadar",
+    "completed_at": "2026-08-18T08:09:11.534388",
+    "results": {
+      "video": {
+        "path": "C:\\Users\\USER\\Desktop\\traffic-police-ai\\VNIT\\backend\\uploads\\78c2db6ad39a49b5a18e1039bfa8d41c_14739246_1080_1920_59fps.mp4",
+        "fps": 59.0,
+        "total_frames": 1032,
+        "processed_frames": 206,
+        "width": 1080,
+        "height": 1920
+      },
+      "traffic": {
+        "average_vehicle_count": 69.26,
+        "average_speed_kmh": 41.19,
+        "traffic_density": "High"
+      },
+      "risk": {
+        "risk_score": 69.38,
+        "risk_level": "Medium",
+        "confidence": null,
+        "model_available": true,
+        "features": {
+          "hour": 8.0,
+          "day_of_week": 1,
+          "vehicle_count": 69.26,
+          "average_speed_kmh": 41.19,
+          "traffic_density_score": 3,
+          "accident_count": 260
+        }
+      },
+      "incidents": [
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 4,
+          "speed_kmh": 90.36
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 12,
+          "speed_kmh": 86.67
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 1,
+          "speed_kmh": 82.65
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 5,
+          "speed_kmh": 130.4
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 2,
+          "speed_kmh": 106.2
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 15,
+          "speed_kmh": 96.12
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 8,
+          "speed_kmh": 125.75
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 6,
+          "speed_kmh": 94.08
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 7,
+          "speed_kmh": 148.76
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 14,
+          "speed_kmh": 108.88
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 17,
+          "speed_kmh": 80.88
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 22,
+          "speed_kmh": 95.67
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 29,
+          "speed_kmh": 146.69
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 9,
+          "speed_kmh": 163.56
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 35,
+          "speed_kmh": 86.77
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 21,
+          "speed_kmh": 165.73
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 38,
+          "speed_kmh": 133.88
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 18,
+          "speed_kmh": 144.43
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 24,
+          "speed_kmh": 159.23
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 3,
+          "speed_kmh": 150.67
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 48,
+          "speed_kmh": 102.53
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 32,
+          "speed_kmh": 119.11
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 39,
+          "speed_kmh": 140.65
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 50,
+          "speed_kmh": 109.9
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 52,
+          "speed_kmh": 99.44
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 23,
+          "speed_kmh": 129.63
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 25,
+          "speed_kmh": 164.59
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 56,
+          "speed_kmh": 136.75
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 53,
+          "speed_kmh": 120.77
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 54,
+          "speed_kmh": 168.35
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 42,
+          "speed_kmh": 161.77
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 61,
+          "speed_kmh": 122.27
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 27,
+          "speed_kmh": 154.24
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 51,
+          "speed_kmh": 137.13
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 46,
+          "speed_kmh": 104.42
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 70,
+          "speed_kmh": 110.47
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 45,
+          "speed_kmh": 140.7
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 20,
+          "speed_kmh": 141.74
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 60,
+          "speed_kmh": 150.55
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 62,
+          "speed_kmh": 147.92
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 71,
+          "speed_kmh": 152.59
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 69,
+          "speed_kmh": 89.23
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 75,
+          "speed_kmh": 82.07
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 83,
+          "speed_kmh": 114.95
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 33,
+          "speed_kmh": 119.62
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 68,
+          "speed_kmh": 120.04
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 77,
+          "speed_kmh": 90.14
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 88,
+          "speed_kmh": 118.34
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 74,
+          "speed_kmh": 168.45
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 94,
+          "speed_kmh": 117.13
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 95,
+          "speed_kmh": 120.47
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 26,
+          "speed_kmh": 98.53
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 76,
+          "speed_kmh": 149.6
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 80,
+          "speed_kmh": 90.81
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 79,
+          "speed_kmh": 88.34
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 85,
+          "speed_kmh": 146.31
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 57,
+          "speed_kmh": 90.91
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 104,
+          "speed_kmh": 155.07
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 89,
+          "speed_kmh": 86.02
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 99,
+          "speed_kmh": 167.96
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 100,
+          "speed_kmh": 111.44
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 107,
+          "speed_kmh": 154.13
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 105,
+          "speed_kmh": 110.14
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 101,
+          "speed_kmh": 115.19
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 115,
+          "speed_kmh": 159.19
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 98,
+          "speed_kmh": 80.88
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 109,
+          "speed_kmh": 96.89
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 113,
+          "speed_kmh": 124.88
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 103,
+          "speed_kmh": 121.98
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 116,
+          "speed_kmh": 80.82
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 120,
+          "speed_kmh": 135.7
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 114,
+          "speed_kmh": 98.07
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 129,
+          "speed_kmh": 124.94
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 106,
+          "speed_kmh": 116.99
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 82,
+          "speed_kmh": 112.65
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 126,
+          "speed_kmh": 99.01
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 96,
+          "speed_kmh": 123.85
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 135,
+          "speed_kmh": 89.44
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 108,
+          "speed_kmh": 149.06
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 124,
+          "speed_kmh": 82.62
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 137,
+          "speed_kmh": 144.43
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 118,
+          "speed_kmh": 149.6
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 128,
+          "speed_kmh": 153.19
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 132,
+          "speed_kmh": 92.31
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 119,
+          "speed_kmh": 97.08
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 140,
+          "speed_kmh": 162.55
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 138,
+          "speed_kmh": 119.42
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 141,
+          "speed_kmh": 162.44
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 147,
+          "speed_kmh": 113.71
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 136,
+          "speed_kmh": 121.89
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 148,
+          "speed_kmh": 103.58
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 92,
+          "speed_kmh": 164.37
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 143,
+          "speed_kmh": 141.21
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 134,
+          "speed_kmh": 157.88
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 156,
+          "speed_kmh": 144.34
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 157,
+          "speed_kmh": 104.27
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 139,
+          "speed_kmh": 130.97
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 151,
+          "speed_kmh": 95.41
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 155,
+          "speed_kmh": 123.3
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 159,
+          "speed_kmh": 150.94
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 167,
+          "speed_kmh": 124.07
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 168,
+          "speed_kmh": 150.82
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 171,
+          "speed_kmh": 142.32
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 163,
+          "speed_kmh": 94.99
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 173,
+          "speed_kmh": 139.89
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 146,
+          "speed_kmh": 144.45
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 153,
+          "speed_kmh": 87.81
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 179,
+          "speed_kmh": 131.84
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 180,
+          "speed_kmh": 102.15
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 165,
+          "speed_kmh": 122.92
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 169,
+          "speed_kmh": 138.06
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 182,
+          "speed_kmh": 91.21
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 184,
+          "speed_kmh": 105.82
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 187,
+          "speed_kmh": 110.88
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 189,
+          "speed_kmh": 114.14
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 166,
+          "speed_kmh": 88.7
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 188,
+          "speed_kmh": 136.99
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 192,
+          "speed_kmh": 98.55
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 162,
+          "speed_kmh": 166.18
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 197,
+          "speed_kmh": 147.8
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 205,
+          "speed_kmh": 100.19
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 178,
+          "speed_kmh": 134.9
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 175,
+          "speed_kmh": 100.93
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 194,
+          "speed_kmh": 119.11
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 217,
+          "speed_kmh": 99.85
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 218,
+          "speed_kmh": 150.94
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 200,
+          "speed_kmh": 114.72
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 219,
+          "speed_kmh": 139.68
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 220,
+          "speed_kmh": 116.99
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 202,
+          "speed_kmh": 163.22
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 223,
+          "speed_kmh": 91.21
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 207,
+          "speed_kmh": 102.17
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 232,
+          "speed_kmh": 111.18
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 203,
+          "speed_kmh": 169.77
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 208,
+          "speed_kmh": 123.48
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 231,
+          "speed_kmh": 131.65
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 221,
+          "speed_kmh": 87.19
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 214,
+          "speed_kmh": 141.69
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 244,
+          "speed_kmh": 157.23
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 224,
+          "speed_kmh": 132.05
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 249,
+          "speed_kmh": 132.46
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 237,
+          "speed_kmh": 150.13
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 252,
+          "speed_kmh": 122.11
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 254,
+          "speed_kmh": 144.46
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 234,
+          "speed_kmh": 149.16
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 239,
+          "speed_kmh": 108.51
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 256,
+          "speed_kmh": 158.05
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 191,
+          "speed_kmh": 150.31
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 236,
+          "speed_kmh": 87.19
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 258,
+          "speed_kmh": 91.73
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 257,
+          "speed_kmh": 149.65
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 264,
+          "speed_kmh": 119.79
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 273,
+          "speed_kmh": 127.6
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 246,
+          "speed_kmh": 89.23
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 263,
+          "speed_kmh": 153.78
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 275,
+          "speed_kmh": 120.15
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 247,
+          "speed_kmh": 159.36
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 266,
+          "speed_kmh": 156.11
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 279,
+          "speed_kmh": 110.2
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 243,
+          "speed_kmh": 139.17
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 268,
+          "speed_kmh": 129.69
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 270,
+          "speed_kmh": 135.15
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 290,
+          "speed_kmh": 124.67
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 294,
+          "speed_kmh": 89.23
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 293,
+          "speed_kmh": 148.38
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 277,
+          "speed_kmh": 102.75
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 289,
+          "speed_kmh": 117.05
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 248,
+          "speed_kmh": 157.31
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 303,
+          "speed_kmh": 107.49
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 260,
+          "speed_kmh": 165.3
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 298,
+          "speed_kmh": 89.54
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 282,
+          "speed_kmh": 137.27
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 288,
+          "speed_kmh": 165.45
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 296,
+          "speed_kmh": 162.32
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 297,
+          "speed_kmh": 82.86
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 310,
+          "speed_kmh": 91.9
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 315,
+          "speed_kmh": 80.74
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 323,
+          "speed_kmh": 83.27
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 322,
+          "speed_kmh": 156.66
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 324,
+          "speed_kmh": 91.33
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 327,
+          "speed_kmh": 118.53
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 283,
+          "speed_kmh": 162.45
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 326,
+          "speed_kmh": 136.75
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 329,
+          "speed_kmh": 133.95
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 292,
+          "speed_kmh": 153.43
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 316,
+          "speed_kmh": 121.37
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 335,
+          "speed_kmh": 93.84
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 334,
+          "speed_kmh": 107.84
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 345,
+          "speed_kmh": 84.03
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 311,
+          "speed_kmh": 129.63
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 337,
+          "speed_kmh": 130.67
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 340,
+          "speed_kmh": 113.29
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 341,
+          "speed_kmh": 159.19
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 343,
+          "speed_kmh": 153.52
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 333,
+          "speed_kmh": 105.13
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 347,
+          "speed_kmh": 132.78
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 339,
+          "speed_kmh": 111.36
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 354,
+          "speed_kmh": 124.18
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 332,
+          "speed_kmh": 102.66
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 358,
+          "speed_kmh": 135.95
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 306,
+          "speed_kmh": 131.21
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 319,
+          "speed_kmh": 166.77
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 363,
+          "speed_kmh": 162.44
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 328,
+          "speed_kmh": 155.4
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 361,
+          "speed_kmh": 136.22
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 365,
+          "speed_kmh": 99.53
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 368,
+          "speed_kmh": 155.17
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 321,
+          "speed_kmh": 155.79
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 336,
+          "speed_kmh": 139.62
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 364,
+          "speed_kmh": 101.33
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 352,
+          "speed_kmh": 166.54
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 371,
+          "speed_kmh": 150.94
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 325,
+          "speed_kmh": 127.88
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 330,
+          "speed_kmh": 129.3
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 338,
+          "speed_kmh": 168.45
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 331,
+          "speed_kmh": 129.3
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 307,
+          "speed_kmh": 89.23
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 344,
+          "speed_kmh": 167.31
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 367,
+          "speed_kmh": 152.65
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 379,
+          "speed_kmh": 113.35
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 356,
+          "speed_kmh": 143.59
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 377,
+          "speed_kmh": 164.04
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 318,
+          "speed_kmh": 136.48
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 388,
+          "speed_kmh": 165.67
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 390,
+          "speed_kmh": 100.93
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 396,
+          "speed_kmh": 157.18
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 397,
+          "speed_kmh": 93.67
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 366,
+          "speed_kmh": 166.39
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 378,
+          "speed_kmh": 168.45
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 399,
+          "speed_kmh": 150.94
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 265,
+          "speed_kmh": 138.47
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 400,
+          "speed_kmh": 92.61
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 384,
+          "speed_kmh": 166.54
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 320,
+          "speed_kmh": 141.99
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 413,
+          "speed_kmh": 141.03
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 412,
+          "speed_kmh": 82.94
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 416,
+          "speed_kmh": 94.73
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 420,
+          "speed_kmh": 168.88
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 375,
+          "speed_kmh": 84.11
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 415,
+          "speed_kmh": 80.96
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 425,
+          "speed_kmh": 96.43
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 402,
+          "speed_kmh": 126.77
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 437,
+          "speed_kmh": 97.91
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 73,
+          "speed_kmh": 105.82
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 380,
+          "speed_kmh": 123.48
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 427,
+          "speed_kmh": 138.21
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 435,
+          "speed_kmh": 88.01
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 440,
+          "speed_kmh": 132.78
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 444,
+          "speed_kmh": 106.73
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 410,
+          "speed_kmh": 106.9
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 419,
+          "speed_kmh": 92.22
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 436,
+          "speed_kmh": 110.28
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 432,
+          "speed_kmh": 80.88
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 376,
+          "speed_kmh": 138.17
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 430,
+          "speed_kmh": 144.46
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 443,
+          "speed_kmh": 145.71
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 450,
+          "speed_kmh": 96.33
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 433,
+          "speed_kmh": 142.32
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 424,
+          "speed_kmh": 161.48
+        },
+        {
+          "type": "overspeeding",
+          "severity": "medium",
+          "vehicle_id": 455,
+          "speed_kmh": 132.3
+        }
+      ],
+      "timeline": [
+        {
+          "frame": 5,
+          "timestamp_seconds": 0.08,
+          "vehicle_count": 0,
+          "average_speed_kmh": 0.0,
+          "traffic_density": "Very Low",
+          "incident_count": 0
+        },
+        {
+          "frame": 10,
+          "timestamp_seconds": 0.17,
+          "vehicle_count": 0,
+          "average_speed_kmh": 0.0,
+          "traffic_density": "Very Low",
+          "incident_count": 0
+        },
+        {
+          "frame": 15,
+          "timestamp_seconds": 0.25,
+          "vehicle_count": 0,
+          "average_speed_kmh": 0.0,
+          "traffic_density": "Very Low",
+          "incident_count": 0
+        },
+        {
+          "frame": 20,
+          "timestamp_seconds": 0.34,
+          "vehicle_count": 0,
+          "average_speed_kmh": 0.0,
+          "traffic_density": "Very Low",
+          "incident_count": 0
+        },
+        {
+          "frame": 25,
+          "timestamp_seconds": 0.42,
+          "vehicle_count": 0,
+          "average_speed_kmh": 0.0,
+          "traffic_density": "Very Low",
+          "incident_count": 0
+        },
+        {
+          "frame": 30,
+          "timestamp_seconds": 0.51,
+          "vehicle_count": 13,
+          "average_speed_kmh": 0.0,
+          "traffic_density": "Low",
+          "incident_count": 0
+        },
+        {
+          "frame": 35,
+          "timestamp_seconds": 0.59,
+          "vehicle_count": 15,
+          "average_speed_kmh": 38.35,
+          "traffic_density": "Medium",
+          "incident_count": 2
+        },
+        {
+          "frame": 40,
+          "timestamp_seconds": 0.68,
+          "vehicle_count": 18,
+          "average_speed_kmh": 35.43,
+          "traffic_density": "Medium",
+          "incident_count": 3
+        },
+        {
+          "frame": 45,
+          "timestamp_seconds": 0.76,
+          "vehicle_count": 20,
+          "average_speed_kmh": 44.45,
+          "traffic_density": "Medium",
+          "incident_count": 4
+        },
+        {
+          "frame": 50,
+          "timestamp_seconds": 0.85,
+          "vehicle_count": 20,
+          "average_speed_kmh": 40.64,
+          "traffic_density": "Medium",
+          "incident_count": 4
+        },
+        {
+          "frame": 55,
+          "timestamp_seconds": 0.93,
+          "vehicle_count": 30,
+          "average_speed_kmh": 32.33,
+          "traffic_density": "High",
+          "incident_count": 4
+        },
+        {
+          "frame": 60,
+          "timestamp_seconds": 1.02,
+          "vehicle_count": 33,
+          "average_speed_kmh": 44.66,
+          "traffic_density": "High",
+          "incident_count": 9
+        },
+        {
+          "frame": 65,
+          "timestamp_seconds": 1.1,
+          "vehicle_count": 34,
+          "average_speed_kmh": 39.58,
+          "traffic_density": "High",
+          "incident_count": 6
+        },
+        {
+          "frame": 70,
+          "timestamp_seconds": 1.19,
+          "vehicle_count": 39,
+          "average_speed_kmh": 36.28,
+          "traffic_density": "High",
+          "incident_count": 7
+        },
+        {
+          "frame": 75,
+          "timestamp_seconds": 1.27,
+          "vehicle_count": 41,
+          "average_speed_kmh": 33.88,
+          "traffic_density": "High",
+          "incident_count": 6
+        },
+        {
+          "frame": 80,
+          "timestamp_seconds": 1.36,
+          "vehicle_count": 42,
+          "average_speed_kmh": 40.42,
+          "traffic_density": "High",
+          "incident_count": 10
+        },
+        {
+          "frame": 85,
+          "timestamp_seconds": 1.44,
+          "vehicle_count": 46,
+          "average_speed_kmh": 34.09,
+          "traffic_density": "High",
+          "incident_count": 7
+        },
+        {
+          "frame": 90,
+          "timestamp_seconds": 1.53,
+          "vehicle_count": 49,
+          "average_speed_kmh": 35.72,
+          "traffic_density": "High",
+          "incident_count": 8
+        },
+        {
+          "frame": 95,
+          "timestamp_seconds": 1.61,
+          "vehicle_count": 49,
+          "average_speed_kmh": 41.63,
+          "traffic_density": "High",
+          "incident_count": 11
+        },
+        {
+          "frame": 100,
+          "timestamp_seconds": 1.69,
+          "vehicle_count": 51,
+          "average_speed_kmh": 39.83,
+          "traffic_density": "High",
+          "incident_count": 10
+        },
+        {
+          "frame": 105,
+          "timestamp_seconds": 1.78,
+          "vehicle_count": 52,
+          "average_speed_kmh": 41.96,
+          "traffic_density": "High",
+          "incident_count": 10
+        },
+        {
+          "frame": 110,
+          "timestamp_seconds": 1.86,
+          "vehicle_count": 53,
+          "average_speed_kmh": 39.87,
+          "traffic_density": "High",
+          "incident_count": 9
+        },
+        {
+          "frame": 115,
+          "timestamp_seconds": 1.95,
+          "vehicle_count": 55,
+          "average_speed_kmh": 43.72,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 120,
+          "timestamp_seconds": 2.03,
+          "vehicle_count": 54,
+          "average_speed_kmh": 48.63,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 125,
+          "timestamp_seconds": 2.12,
+          "vehicle_count": 55,
+          "average_speed_kmh": 48.25,
+          "traffic_density": "High",
+          "incident_count": 13
+        },
+        {
+          "frame": 130,
+          "timestamp_seconds": 2.2,
+          "vehicle_count": 57,
+          "average_speed_kmh": 41.92,
+          "traffic_density": "High",
+          "incident_count": 10
+        },
+        {
+          "frame": 135,
+          "timestamp_seconds": 2.29,
+          "vehicle_count": 59,
+          "average_speed_kmh": 46.82,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 140,
+          "timestamp_seconds": 2.37,
+          "vehicle_count": 60,
+          "average_speed_kmh": 43.46,
+          "traffic_density": "High",
+          "incident_count": 11
+        },
+        {
+          "frame": 145,
+          "timestamp_seconds": 2.46,
+          "vehicle_count": 60,
+          "average_speed_kmh": 44.15,
+          "traffic_density": "High",
+          "incident_count": 11
+        },
+        {
+          "frame": 150,
+          "timestamp_seconds": 2.54,
+          "vehicle_count": 62,
+          "average_speed_kmh": 47.8,
+          "traffic_density": "High",
+          "incident_count": 13
+        },
+        {
+          "frame": 155,
+          "timestamp_seconds": 2.63,
+          "vehicle_count": 62,
+          "average_speed_kmh": 47.81,
+          "traffic_density": "High",
+          "incident_count": 14
+        },
+        {
+          "frame": 160,
+          "timestamp_seconds": 2.71,
+          "vehicle_count": 64,
+          "average_speed_kmh": 43.66,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 165,
+          "timestamp_seconds": 2.8,
+          "vehicle_count": 65,
+          "average_speed_kmh": 50.04,
+          "traffic_density": "High",
+          "incident_count": 15
+        },
+        {
+          "frame": 170,
+          "timestamp_seconds": 2.88,
+          "vehicle_count": 67,
+          "average_speed_kmh": 52.04,
+          "traffic_density": "High",
+          "incident_count": 16
+        },
+        {
+          "frame": 175,
+          "timestamp_seconds": 2.97,
+          "vehicle_count": 64,
+          "average_speed_kmh": 41.75,
+          "traffic_density": "High",
+          "incident_count": 14
+        },
+        {
+          "frame": 180,
+          "timestamp_seconds": 3.05,
+          "vehicle_count": 63,
+          "average_speed_kmh": 41.45,
+          "traffic_density": "High",
+          "incident_count": 14
+        },
+        {
+          "frame": 185,
+          "timestamp_seconds": 3.14,
+          "vehicle_count": 63,
+          "average_speed_kmh": 48.25,
+          "traffic_density": "High",
+          "incident_count": 17
+        },
+        {
+          "frame": 190,
+          "timestamp_seconds": 3.22,
+          "vehicle_count": 61,
+          "average_speed_kmh": 43.65,
+          "traffic_density": "High",
+          "incident_count": 14
+        },
+        {
+          "frame": 195,
+          "timestamp_seconds": 3.31,
+          "vehicle_count": 59,
+          "average_speed_kmh": 39.42,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 200,
+          "timestamp_seconds": 3.39,
+          "vehicle_count": 59,
+          "average_speed_kmh": 37.13,
+          "traffic_density": "High",
+          "incident_count": 11
+        },
+        {
+          "frame": 205,
+          "timestamp_seconds": 3.47,
+          "vehicle_count": 60,
+          "average_speed_kmh": 35.09,
+          "traffic_density": "High",
+          "incident_count": 11
+        },
+        {
+          "frame": 210,
+          "timestamp_seconds": 3.56,
+          "vehicle_count": 58,
+          "average_speed_kmh": 39.2,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 215,
+          "timestamp_seconds": 3.64,
+          "vehicle_count": 60,
+          "average_speed_kmh": 45.21,
+          "traffic_density": "High",
+          "incident_count": 16
+        },
+        {
+          "frame": 220,
+          "timestamp_seconds": 3.73,
+          "vehicle_count": 58,
+          "average_speed_kmh": 42.08,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 225,
+          "timestamp_seconds": 3.81,
+          "vehicle_count": 58,
+          "average_speed_kmh": 41.79,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 230,
+          "timestamp_seconds": 3.9,
+          "vehicle_count": 62,
+          "average_speed_kmh": 36.32,
+          "traffic_density": "High",
+          "incident_count": 11
+        },
+        {
+          "frame": 235,
+          "timestamp_seconds": 3.98,
+          "vehicle_count": 62,
+          "average_speed_kmh": 41.95,
+          "traffic_density": "High",
+          "incident_count": 14
+        },
+        {
+          "frame": 240,
+          "timestamp_seconds": 4.07,
+          "vehicle_count": 63,
+          "average_speed_kmh": 44.48,
+          "traffic_density": "High",
+          "incident_count": 15
+        },
+        {
+          "frame": 245,
+          "timestamp_seconds": 4.15,
+          "vehicle_count": 61,
+          "average_speed_kmh": 40.48,
+          "traffic_density": "High",
+          "incident_count": 14
+        },
+        {
+          "frame": 250,
+          "timestamp_seconds": 4.24,
+          "vehicle_count": 65,
+          "average_speed_kmh": 36.77,
+          "traffic_density": "High",
+          "incident_count": 13
+        },
+        {
+          "frame": 255,
+          "timestamp_seconds": 4.32,
+          "vehicle_count": 63,
+          "average_speed_kmh": 33.89,
+          "traffic_density": "High",
+          "incident_count": 11
+        },
+        {
+          "frame": 260,
+          "timestamp_seconds": 4.41,
+          "vehicle_count": 62,
+          "average_speed_kmh": 35.63,
+          "traffic_density": "High",
+          "incident_count": 10
+        },
+        {
+          "frame": 265,
+          "timestamp_seconds": 4.49,
+          "vehicle_count": 62,
+          "average_speed_kmh": 27.78,
+          "traffic_density": "High",
+          "incident_count": 7
+        },
+        {
+          "frame": 270,
+          "timestamp_seconds": 4.58,
+          "vehicle_count": 62,
+          "average_speed_kmh": 29.42,
+          "traffic_density": "High",
+          "incident_count": 6
+        },
+        {
+          "frame": 275,
+          "timestamp_seconds": 4.66,
+          "vehicle_count": 63,
+          "average_speed_kmh": 36.8,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 280,
+          "timestamp_seconds": 4.75,
+          "vehicle_count": 64,
+          "average_speed_kmh": 31.42,
+          "traffic_density": "High",
+          "incident_count": 8
+        },
+        {
+          "frame": 285,
+          "timestamp_seconds": 4.83,
+          "vehicle_count": 67,
+          "average_speed_kmh": 31.11,
+          "traffic_density": "High",
+          "incident_count": 7
+        },
+        {
+          "frame": 290,
+          "timestamp_seconds": 4.92,
+          "vehicle_count": 65,
+          "average_speed_kmh": 37.31,
+          "traffic_density": "High",
+          "incident_count": 10
+        },
+        {
+          "frame": 295,
+          "timestamp_seconds": 5.0,
+          "vehicle_count": 62,
+          "average_speed_kmh": 33.76,
+          "traffic_density": "High",
+          "incident_count": 9
+        },
+        {
+          "frame": 300,
+          "timestamp_seconds": 5.08,
+          "vehicle_count": 65,
+          "average_speed_kmh": 30.31,
+          "traffic_density": "High",
+          "incident_count": 8
+        },
+        {
+          "frame": 305,
+          "timestamp_seconds": 5.17,
+          "vehicle_count": 66,
+          "average_speed_kmh": 27.52,
+          "traffic_density": "High",
+          "incident_count": 7
+        },
+        {
+          "frame": 310,
+          "timestamp_seconds": 5.25,
+          "vehicle_count": 64,
+          "average_speed_kmh": 32.24,
+          "traffic_density": "High",
+          "incident_count": 8
+        },
+        {
+          "frame": 315,
+          "timestamp_seconds": 5.34,
+          "vehicle_count": 66,
+          "average_speed_kmh": 34.03,
+          "traffic_density": "High",
+          "incident_count": 11
+        },
+        {
+          "frame": 320,
+          "timestamp_seconds": 5.42,
+          "vehicle_count": 66,
+          "average_speed_kmh": 32.83,
+          "traffic_density": "High",
+          "incident_count": 9
+        },
+        {
+          "frame": 325,
+          "timestamp_seconds": 5.51,
+          "vehicle_count": 66,
+          "average_speed_kmh": 33.53,
+          "traffic_density": "High",
+          "incident_count": 9
+        },
+        {
+          "frame": 330,
+          "timestamp_seconds": 5.59,
+          "vehicle_count": 67,
+          "average_speed_kmh": 33.58,
+          "traffic_density": "High",
+          "incident_count": 8
+        },
+        {
+          "frame": 335,
+          "timestamp_seconds": 5.68,
+          "vehicle_count": 69,
+          "average_speed_kmh": 33.82,
+          "traffic_density": "High",
+          "incident_count": 10
+        },
+        {
+          "frame": 340,
+          "timestamp_seconds": 5.76,
+          "vehicle_count": 71,
+          "average_speed_kmh": 29.0,
+          "traffic_density": "High",
+          "incident_count": 7
+        },
+        {
+          "frame": 345,
+          "timestamp_seconds": 5.85,
+          "vehicle_count": 70,
+          "average_speed_kmh": 30.33,
+          "traffic_density": "High",
+          "incident_count": 8
+        },
+        {
+          "frame": 350,
+          "timestamp_seconds": 5.93,
+          "vehicle_count": 66,
+          "average_speed_kmh": 27.58,
+          "traffic_density": "High",
+          "incident_count": 7
+        },
+        {
+          "frame": 355,
+          "timestamp_seconds": 6.02,
+          "vehicle_count": 67,
+          "average_speed_kmh": 31.17,
+          "traffic_density": "High",
+          "incident_count": 9
+        },
+        {
+          "frame": 360,
+          "timestamp_seconds": 6.1,
+          "vehicle_count": 68,
+          "average_speed_kmh": 28.78,
+          "traffic_density": "High",
+          "incident_count": 7
+        },
+        {
+          "frame": 365,
+          "timestamp_seconds": 6.19,
+          "vehicle_count": 67,
+          "average_speed_kmh": 28.81,
+          "traffic_density": "High",
+          "incident_count": 8
+        },
+        {
+          "frame": 370,
+          "timestamp_seconds": 6.27,
+          "vehicle_count": 68,
+          "average_speed_kmh": 32.46,
+          "traffic_density": "High",
+          "incident_count": 8
+        },
+        {
+          "frame": 375,
+          "timestamp_seconds": 6.36,
+          "vehicle_count": 70,
+          "average_speed_kmh": 26.26,
+          "traffic_density": "High",
+          "incident_count": 6
+        },
+        {
+          "frame": 380,
+          "timestamp_seconds": 6.44,
+          "vehicle_count": 69,
+          "average_speed_kmh": 31.42,
+          "traffic_density": "High",
+          "incident_count": 8
+        },
+        {
+          "frame": 385,
+          "timestamp_seconds": 6.53,
+          "vehicle_count": 68,
+          "average_speed_kmh": 35.6,
+          "traffic_density": "High",
+          "incident_count": 10
+        },
+        {
+          "frame": 390,
+          "timestamp_seconds": 6.61,
+          "vehicle_count": 68,
+          "average_speed_kmh": 40.48,
+          "traffic_density": "High",
+          "incident_count": 15
+        },
+        {
+          "frame": 395,
+          "timestamp_seconds": 6.69,
+          "vehicle_count": 66,
+          "average_speed_kmh": 38.44,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 400,
+          "timestamp_seconds": 6.78,
+          "vehicle_count": 64,
+          "average_speed_kmh": 39.97,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 405,
+          "timestamp_seconds": 6.86,
+          "vehicle_count": 66,
+          "average_speed_kmh": 45.12,
+          "traffic_density": "High",
+          "incident_count": 16
+        },
+        {
+          "frame": 410,
+          "timestamp_seconds": 6.95,
+          "vehicle_count": 67,
+          "average_speed_kmh": 38.21,
+          "traffic_density": "High",
+          "incident_count": 13
+        },
+        {
+          "frame": 415,
+          "timestamp_seconds": 7.03,
+          "vehicle_count": 71,
+          "average_speed_kmh": 43.19,
+          "traffic_density": "High",
+          "incident_count": 16
+        },
+        {
+          "frame": 420,
+          "timestamp_seconds": 7.12,
+          "vehicle_count": 74,
+          "average_speed_kmh": 40.67,
+          "traffic_density": "High",
+          "incident_count": 14
+        },
+        {
+          "frame": 425,
+          "timestamp_seconds": 7.2,
+          "vehicle_count": 74,
+          "average_speed_kmh": 40.16,
+          "traffic_density": "High",
+          "incident_count": 15
+        },
+        {
+          "frame": 430,
+          "timestamp_seconds": 7.29,
+          "vehicle_count": 76,
+          "average_speed_kmh": 40.68,
+          "traffic_density": "High",
+          "incident_count": 16
+        },
+        {
+          "frame": 435,
+          "timestamp_seconds": 7.37,
+          "vehicle_count": 76,
+          "average_speed_kmh": 42.75,
+          "traffic_density": "High",
+          "incident_count": 15
+        },
+        {
+          "frame": 440,
+          "timestamp_seconds": 7.46,
+          "vehicle_count": 76,
+          "average_speed_kmh": 46.67,
+          "traffic_density": "High",
+          "incident_count": 19
+        },
+        {
+          "frame": 445,
+          "timestamp_seconds": 7.54,
+          "vehicle_count": 75,
+          "average_speed_kmh": 47.07,
+          "traffic_density": "High",
+          "incident_count": 20
+        },
+        {
+          "frame": 450,
+          "timestamp_seconds": 7.63,
+          "vehicle_count": 72,
+          "average_speed_kmh": 47.72,
+          "traffic_density": "High",
+          "incident_count": 18
+        },
+        {
+          "frame": 455,
+          "timestamp_seconds": 7.71,
+          "vehicle_count": 75,
+          "average_speed_kmh": 46.06,
+          "traffic_density": "High",
+          "incident_count": 21
+        },
+        {
+          "frame": 460,
+          "timestamp_seconds": 7.8,
+          "vehicle_count": 77,
+          "average_speed_kmh": 48.32,
+          "traffic_density": "High",
+          "incident_count": 23
+        },
+        {
+          "frame": 465,
+          "timestamp_seconds": 7.88,
+          "vehicle_count": 79,
+          "average_speed_kmh": 46.82,
+          "traffic_density": "High",
+          "incident_count": 24
+        },
+        {
+          "frame": 470,
+          "timestamp_seconds": 7.97,
+          "vehicle_count": 79,
+          "average_speed_kmh": 45.91,
+          "traffic_density": "High",
+          "incident_count": 23
+        },
+        {
+          "frame": 475,
+          "timestamp_seconds": 8.05,
+          "vehicle_count": 83,
+          "average_speed_kmh": 45.94,
+          "traffic_density": "High",
+          "incident_count": 25
+        },
+        {
+          "frame": 480,
+          "timestamp_seconds": 8.14,
+          "vehicle_count": 82,
+          "average_speed_kmh": 46.73,
+          "traffic_density": "High",
+          "incident_count": 24
+        },
+        {
+          "frame": 485,
+          "timestamp_seconds": 8.22,
+          "vehicle_count": 81,
+          "average_speed_kmh": 48.99,
+          "traffic_density": "High",
+          "incident_count": 25
+        },
+        {
+          "frame": 490,
+          "timestamp_seconds": 8.31,
+          "vehicle_count": 83,
+          "average_speed_kmh": 47.24,
+          "traffic_density": "High",
+          "incident_count": 25
+        },
+        {
+          "frame": 495,
+          "timestamp_seconds": 8.39,
+          "vehicle_count": 80,
+          "average_speed_kmh": 44.52,
+          "traffic_density": "High",
+          "incident_count": 22
+        },
+        {
+          "frame": 500,
+          "timestamp_seconds": 8.47,
+          "vehicle_count": 83,
+          "average_speed_kmh": 43.93,
+          "traffic_density": "High",
+          "incident_count": 24
+        },
+        {
+          "frame": 505,
+          "timestamp_seconds": 8.56,
+          "vehicle_count": 78,
+          "average_speed_kmh": 45.7,
+          "traffic_density": "High",
+          "incident_count": 23
+        },
+        {
+          "frame": 510,
+          "timestamp_seconds": 8.64,
+          "vehicle_count": 77,
+          "average_speed_kmh": 45.07,
+          "traffic_density": "High",
+          "incident_count": 22
+        },
+        {
+          "frame": 515,
+          "timestamp_seconds": 8.73,
+          "vehicle_count": 77,
+          "average_speed_kmh": 47.17,
+          "traffic_density": "High",
+          "incident_count": 25
+        },
+        {
+          "frame": 520,
+          "timestamp_seconds": 8.81,
+          "vehicle_count": 74,
+          "average_speed_kmh": 45.09,
+          "traffic_density": "High",
+          "incident_count": 23
+        },
+        {
+          "frame": 525,
+          "timestamp_seconds": 8.9,
+          "vehicle_count": 71,
+          "average_speed_kmh": 44.95,
+          "traffic_density": "High",
+          "incident_count": 21
+        },
+        {
+          "frame": 530,
+          "timestamp_seconds": 8.98,
+          "vehicle_count": 70,
+          "average_speed_kmh": 42.42,
+          "traffic_density": "High",
+          "incident_count": 18
+        },
+        {
+          "frame": 535,
+          "timestamp_seconds": 9.07,
+          "vehicle_count": 64,
+          "average_speed_kmh": 43.05,
+          "traffic_density": "High",
+          "incident_count": 17
+        },
+        {
+          "frame": 540,
+          "timestamp_seconds": 9.15,
+          "vehicle_count": 64,
+          "average_speed_kmh": 43.56,
+          "traffic_density": "High",
+          "incident_count": 17
+        },
+        {
+          "frame": 545,
+          "timestamp_seconds": 9.24,
+          "vehicle_count": 66,
+          "average_speed_kmh": 49.22,
+          "traffic_density": "High",
+          "incident_count": 20
+        },
+        {
+          "frame": 550,
+          "timestamp_seconds": 9.32,
+          "vehicle_count": 63,
+          "average_speed_kmh": 45.07,
+          "traffic_density": "High",
+          "incident_count": 16
+        },
+        {
+          "frame": 555,
+          "timestamp_seconds": 9.41,
+          "vehicle_count": 59,
+          "average_speed_kmh": 45.78,
+          "traffic_density": "High",
+          "incident_count": 16
+        },
+        {
+          "frame": 560,
+          "timestamp_seconds": 9.49,
+          "vehicle_count": 59,
+          "average_speed_kmh": 45.47,
+          "traffic_density": "High",
+          "incident_count": 16
+        },
+        {
+          "frame": 565,
+          "timestamp_seconds": 9.58,
+          "vehicle_count": 54,
+          "average_speed_kmh": 39.76,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 570,
+          "timestamp_seconds": 9.66,
+          "vehicle_count": 60,
+          "average_speed_kmh": 35.18,
+          "traffic_density": "High",
+          "incident_count": 11
+        },
+        {
+          "frame": 575,
+          "timestamp_seconds": 9.75,
+          "vehicle_count": 62,
+          "average_speed_kmh": 38.45,
+          "traffic_density": "High",
+          "incident_count": 13
+        },
+        {
+          "frame": 580,
+          "timestamp_seconds": 9.83,
+          "vehicle_count": 61,
+          "average_speed_kmh": 49.15,
+          "traffic_density": "High",
+          "incident_count": 16
+        },
+        {
+          "frame": 585,
+          "timestamp_seconds": 9.92,
+          "vehicle_count": 61,
+          "average_speed_kmh": 41.3,
+          "traffic_density": "High",
+          "incident_count": 13
+        },
+        {
+          "frame": 590,
+          "timestamp_seconds": 10.0,
+          "vehicle_count": 63,
+          "average_speed_kmh": 43.69,
+          "traffic_density": "High",
+          "incident_count": 14
+        },
+        {
+          "frame": 595,
+          "timestamp_seconds": 10.08,
+          "vehicle_count": 66,
+          "average_speed_kmh": 37.7,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 600,
+          "timestamp_seconds": 10.17,
+          "vehicle_count": 71,
+          "average_speed_kmh": 33.9,
+          "traffic_density": "High",
+          "incident_count": 11
+        },
+        {
+          "frame": 605,
+          "timestamp_seconds": 10.25,
+          "vehicle_count": 72,
+          "average_speed_kmh": 33.58,
+          "traffic_density": "High",
+          "incident_count": 11
+        },
+        {
+          "frame": 610,
+          "timestamp_seconds": 10.34,
+          "vehicle_count": 74,
+          "average_speed_kmh": 36.85,
+          "traffic_density": "High",
+          "incident_count": 13
+        },
+        {
+          "frame": 615,
+          "timestamp_seconds": 10.42,
+          "vehicle_count": 75,
+          "average_speed_kmh": 34.19,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 620,
+          "timestamp_seconds": 10.51,
+          "vehicle_count": 77,
+          "average_speed_kmh": 39.84,
+          "traffic_density": "High",
+          "incident_count": 18
+        },
+        {
+          "frame": 625,
+          "timestamp_seconds": 10.59,
+          "vehicle_count": 78,
+          "average_speed_kmh": 39.24,
+          "traffic_density": "High",
+          "incident_count": 15
+        },
+        {
+          "frame": 630,
+          "timestamp_seconds": 10.68,
+          "vehicle_count": 76,
+          "average_speed_kmh": 37.42,
+          "traffic_density": "High",
+          "incident_count": 15
+        },
+        {
+          "frame": 635,
+          "timestamp_seconds": 10.76,
+          "vehicle_count": 77,
+          "average_speed_kmh": 36.18,
+          "traffic_density": "High",
+          "incident_count": 14
+        },
+        {
+          "frame": 640,
+          "timestamp_seconds": 10.85,
+          "vehicle_count": 76,
+          "average_speed_kmh": 39.19,
+          "traffic_density": "High",
+          "incident_count": 14
+        },
+        {
+          "frame": 645,
+          "timestamp_seconds": 10.93,
+          "vehicle_count": 76,
+          "average_speed_kmh": 37.65,
+          "traffic_density": "High",
+          "incident_count": 16
+        },
+        {
+          "frame": 650,
+          "timestamp_seconds": 11.02,
+          "vehicle_count": 76,
+          "average_speed_kmh": 33.27,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 655,
+          "timestamp_seconds": 11.1,
+          "vehicle_count": 78,
+          "average_speed_kmh": 35.96,
+          "traffic_density": "High",
+          "incident_count": 14
+        },
+        {
+          "frame": 660,
+          "timestamp_seconds": 11.19,
+          "vehicle_count": 77,
+          "average_speed_kmh": 35.37,
+          "traffic_density": "High",
+          "incident_count": 13
+        },
+        {
+          "frame": 665,
+          "timestamp_seconds": 11.27,
+          "vehicle_count": 76,
+          "average_speed_kmh": 38.72,
+          "traffic_density": "High",
+          "incident_count": 16
+        },
+        {
+          "frame": 670,
+          "timestamp_seconds": 11.36,
+          "vehicle_count": 77,
+          "average_speed_kmh": 38.63,
+          "traffic_density": "High",
+          "incident_count": 16
+        },
+        {
+          "frame": 675,
+          "timestamp_seconds": 11.44,
+          "vehicle_count": 78,
+          "average_speed_kmh": 39.48,
+          "traffic_density": "High",
+          "incident_count": 18
+        },
+        {
+          "frame": 680,
+          "timestamp_seconds": 11.53,
+          "vehicle_count": 76,
+          "average_speed_kmh": 44.38,
+          "traffic_density": "High",
+          "incident_count": 20
+        },
+        {
+          "frame": 685,
+          "timestamp_seconds": 11.61,
+          "vehicle_count": 79,
+          "average_speed_kmh": 40.49,
+          "traffic_density": "High",
+          "incident_count": 18
+        },
+        {
+          "frame": 690,
+          "timestamp_seconds": 11.69,
+          "vehicle_count": 78,
+          "average_speed_kmh": 45.11,
+          "traffic_density": "High",
+          "incident_count": 19
+        },
+        {
+          "frame": 695,
+          "timestamp_seconds": 11.78,
+          "vehicle_count": 78,
+          "average_speed_kmh": 43.17,
+          "traffic_density": "High",
+          "incident_count": 18
+        },
+        {
+          "frame": 700,
+          "timestamp_seconds": 11.86,
+          "vehicle_count": 81,
+          "average_speed_kmh": 41.35,
+          "traffic_density": "High",
+          "incident_count": 17
+        },
+        {
+          "frame": 705,
+          "timestamp_seconds": 11.95,
+          "vehicle_count": 79,
+          "average_speed_kmh": 46.02,
+          "traffic_density": "High",
+          "incident_count": 19
+        },
+        {
+          "frame": 710,
+          "timestamp_seconds": 12.03,
+          "vehicle_count": 77,
+          "average_speed_kmh": 41.13,
+          "traffic_density": "High",
+          "incident_count": 18
+        },
+        {
+          "frame": 715,
+          "timestamp_seconds": 12.12,
+          "vehicle_count": 76,
+          "average_speed_kmh": 44.72,
+          "traffic_density": "High",
+          "incident_count": 18
+        },
+        {
+          "frame": 720,
+          "timestamp_seconds": 12.2,
+          "vehicle_count": 79,
+          "average_speed_kmh": 41.39,
+          "traffic_density": "High",
+          "incident_count": 18
+        },
+        {
+          "frame": 725,
+          "timestamp_seconds": 12.29,
+          "vehicle_count": 80,
+          "average_speed_kmh": 44.53,
+          "traffic_density": "High",
+          "incident_count": 19
+        },
+        {
+          "frame": 730,
+          "timestamp_seconds": 12.37,
+          "vehicle_count": 81,
+          "average_speed_kmh": 44.83,
+          "traffic_density": "High",
+          "incident_count": 19
+        },
+        {
+          "frame": 735,
+          "timestamp_seconds": 12.46,
+          "vehicle_count": 79,
+          "average_speed_kmh": 39.31,
+          "traffic_density": "High",
+          "incident_count": 15
+        },
+        {
+          "frame": 740,
+          "timestamp_seconds": 12.54,
+          "vehicle_count": 76,
+          "average_speed_kmh": 44.83,
+          "traffic_density": "High",
+          "incident_count": 20
+        },
+        {
+          "frame": 745,
+          "timestamp_seconds": 12.63,
+          "vehicle_count": 78,
+          "average_speed_kmh": 43.7,
+          "traffic_density": "High",
+          "incident_count": 17
+        },
+        {
+          "frame": 750,
+          "timestamp_seconds": 12.71,
+          "vehicle_count": 79,
+          "average_speed_kmh": 38.3,
+          "traffic_density": "High",
+          "incident_count": 15
+        },
+        {
+          "frame": 755,
+          "timestamp_seconds": 12.8,
+          "vehicle_count": 79,
+          "average_speed_kmh": 43.66,
+          "traffic_density": "High",
+          "incident_count": 20
+        },
+        {
+          "frame": 760,
+          "timestamp_seconds": 12.88,
+          "vehicle_count": 85,
+          "average_speed_kmh": 36.89,
+          "traffic_density": "High",
+          "incident_count": 15
+        },
+        {
+          "frame": 765,
+          "timestamp_seconds": 12.97,
+          "vehicle_count": 89,
+          "average_speed_kmh": 38.51,
+          "traffic_density": "High",
+          "incident_count": 19
+        },
+        {
+          "frame": 770,
+          "timestamp_seconds": 13.05,
+          "vehicle_count": 89,
+          "average_speed_kmh": 39.37,
+          "traffic_density": "High",
+          "incident_count": 19
+        },
+        {
+          "frame": 775,
+          "timestamp_seconds": 13.14,
+          "vehicle_count": 91,
+          "average_speed_kmh": 42.33,
+          "traffic_density": "High",
+          "incident_count": 22
+        },
+        {
+          "frame": 780,
+          "timestamp_seconds": 13.22,
+          "vehicle_count": 88,
+          "average_speed_kmh": 44.6,
+          "traffic_density": "High",
+          "incident_count": 23
+        },
+        {
+          "frame": 785,
+          "timestamp_seconds": 13.31,
+          "vehicle_count": 89,
+          "average_speed_kmh": 44.9,
+          "traffic_density": "High",
+          "incident_count": 23
+        },
+        {
+          "frame": 790,
+          "timestamp_seconds": 13.39,
+          "vehicle_count": 90,
+          "average_speed_kmh": 41.98,
+          "traffic_density": "High",
+          "incident_count": 21
+        },
+        {
+          "frame": 795,
+          "timestamp_seconds": 13.47,
+          "vehicle_count": 97,
+          "average_speed_kmh": 41.5,
+          "traffic_density": "High",
+          "incident_count": 23
+        },
+        {
+          "frame": 800,
+          "timestamp_seconds": 13.56,
+          "vehicle_count": 100,
+          "average_speed_kmh": 45.32,
+          "traffic_density": "High",
+          "incident_count": 26
+        },
+        {
+          "frame": 805,
+          "timestamp_seconds": 13.64,
+          "vehicle_count": 94,
+          "average_speed_kmh": 45.88,
+          "traffic_density": "High",
+          "incident_count": 25
+        },
+        {
+          "frame": 810,
+          "timestamp_seconds": 13.73,
+          "vehicle_count": 94,
+          "average_speed_kmh": 48.77,
+          "traffic_density": "High",
+          "incident_count": 27
+        },
+        {
+          "frame": 815,
+          "timestamp_seconds": 13.81,
+          "vehicle_count": 94,
+          "average_speed_kmh": 49.23,
+          "traffic_density": "High",
+          "incident_count": 27
+        },
+        {
+          "frame": 820,
+          "timestamp_seconds": 13.9,
+          "vehicle_count": 93,
+          "average_speed_kmh": 46.95,
+          "traffic_density": "High",
+          "incident_count": 26
+        },
+        {
+          "frame": 825,
+          "timestamp_seconds": 13.98,
+          "vehicle_count": 95,
+          "average_speed_kmh": 44.72,
+          "traffic_density": "High",
+          "incident_count": 24
+        },
+        {
+          "frame": 830,
+          "timestamp_seconds": 14.07,
+          "vehicle_count": 97,
+          "average_speed_kmh": 48.45,
+          "traffic_density": "High",
+          "incident_count": 28
+        },
+        {
+          "frame": 835,
+          "timestamp_seconds": 14.15,
+          "vehicle_count": 96,
+          "average_speed_kmh": 46.89,
+          "traffic_density": "High",
+          "incident_count": 28
+        },
+        {
+          "frame": 840,
+          "timestamp_seconds": 14.24,
+          "vehicle_count": 96,
+          "average_speed_kmh": 47.11,
+          "traffic_density": "High",
+          "incident_count": 26
+        },
+        {
+          "frame": 845,
+          "timestamp_seconds": 14.32,
+          "vehicle_count": 97,
+          "average_speed_kmh": 49.2,
+          "traffic_density": "High",
+          "incident_count": 27
+        },
+        {
+          "frame": 850,
+          "timestamp_seconds": 14.41,
+          "vehicle_count": 99,
+          "average_speed_kmh": 49.36,
+          "traffic_density": "High",
+          "incident_count": 27
+        },
+        {
+          "frame": 855,
+          "timestamp_seconds": 14.49,
+          "vehicle_count": 96,
+          "average_speed_kmh": 53.44,
+          "traffic_density": "High",
+          "incident_count": 29
+        },
+        {
+          "frame": 860,
+          "timestamp_seconds": 14.58,
+          "vehicle_count": 94,
+          "average_speed_kmh": 52.37,
+          "traffic_density": "High",
+          "incident_count": 28
+        },
+        {
+          "frame": 865,
+          "timestamp_seconds": 14.66,
+          "vehicle_count": 92,
+          "average_speed_kmh": 48.32,
+          "traffic_density": "High",
+          "incident_count": 25
+        },
+        {
+          "frame": 870,
+          "timestamp_seconds": 14.75,
+          "vehicle_count": 91,
+          "average_speed_kmh": 49.03,
+          "traffic_density": "High",
+          "incident_count": 24
+        },
+        {
+          "frame": 875,
+          "timestamp_seconds": 14.83,
+          "vehicle_count": 90,
+          "average_speed_kmh": 47.8,
+          "traffic_density": "High",
+          "incident_count": 22
+        },
+        {
+          "frame": 880,
+          "timestamp_seconds": 14.92,
+          "vehicle_count": 89,
+          "average_speed_kmh": 53.27,
+          "traffic_density": "High",
+          "incident_count": 24
+        },
+        {
+          "frame": 885,
+          "timestamp_seconds": 15.0,
+          "vehicle_count": 86,
+          "average_speed_kmh": 47.72,
+          "traffic_density": "High",
+          "incident_count": 21
+        },
+        {
+          "frame": 890,
+          "timestamp_seconds": 15.08,
+          "vehicle_count": 84,
+          "average_speed_kmh": 46.37,
+          "traffic_density": "High",
+          "incident_count": 19
+        },
+        {
+          "frame": 895,
+          "timestamp_seconds": 15.17,
+          "vehicle_count": 83,
+          "average_speed_kmh": 45.49,
+          "traffic_density": "High",
+          "incident_count": 20
+        },
+        {
+          "frame": 900,
+          "timestamp_seconds": 15.25,
+          "vehicle_count": 82,
+          "average_speed_kmh": 39.15,
+          "traffic_density": "High",
+          "incident_count": 13
+        },
+        {
+          "frame": 905,
+          "timestamp_seconds": 15.34,
+          "vehicle_count": 81,
+          "average_speed_kmh": 45.34,
+          "traffic_density": "High",
+          "incident_count": 18
+        },
+        {
+          "frame": 910,
+          "timestamp_seconds": 15.42,
+          "vehicle_count": 81,
+          "average_speed_kmh": 43.9,
+          "traffic_density": "High",
+          "incident_count": 17
+        },
+        {
+          "frame": 915,
+          "timestamp_seconds": 15.51,
+          "vehicle_count": 81,
+          "average_speed_kmh": 39.59,
+          "traffic_density": "High",
+          "incident_count": 14
+        },
+        {
+          "frame": 920,
+          "timestamp_seconds": 15.59,
+          "vehicle_count": 78,
+          "average_speed_kmh": 37.93,
+          "traffic_density": "High",
+          "incident_count": 14
+        },
+        {
+          "frame": 925,
+          "timestamp_seconds": 15.68,
+          "vehicle_count": 78,
+          "average_speed_kmh": 32.56,
+          "traffic_density": "High",
+          "incident_count": 8
+        },
+        {
+          "frame": 930,
+          "timestamp_seconds": 15.76,
+          "vehicle_count": 73,
+          "average_speed_kmh": 35.06,
+          "traffic_density": "High",
+          "incident_count": 9
+        },
+        {
+          "frame": 935,
+          "timestamp_seconds": 15.85,
+          "vehicle_count": 78,
+          "average_speed_kmh": 32.9,
+          "traffic_density": "High",
+          "incident_count": 8
+        },
+        {
+          "frame": 940,
+          "timestamp_seconds": 15.93,
+          "vehicle_count": 79,
+          "average_speed_kmh": 34.88,
+          "traffic_density": "High",
+          "incident_count": 9
+        },
+        {
+          "frame": 945,
+          "timestamp_seconds": 16.02,
+          "vehicle_count": 81,
+          "average_speed_kmh": 38.12,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 950,
+          "timestamp_seconds": 16.1,
+          "vehicle_count": 80,
+          "average_speed_kmh": 39.57,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 955,
+          "timestamp_seconds": 16.19,
+          "vehicle_count": 78,
+          "average_speed_kmh": 36.66,
+          "traffic_density": "High",
+          "incident_count": 10
+        },
+        {
+          "frame": 960,
+          "timestamp_seconds": 16.27,
+          "vehicle_count": 78,
+          "average_speed_kmh": 37.91,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 965,
+          "timestamp_seconds": 16.36,
+          "vehicle_count": 78,
+          "average_speed_kmh": 39.14,
+          "traffic_density": "High",
+          "incident_count": 13
+        },
+        {
+          "frame": 970,
+          "timestamp_seconds": 16.44,
+          "vehicle_count": 78,
+          "average_speed_kmh": 34.81,
+          "traffic_density": "High",
+          "incident_count": 10
+        },
+        {
+          "frame": 975,
+          "timestamp_seconds": 16.53,
+          "vehicle_count": 80,
+          "average_speed_kmh": 37.93,
+          "traffic_density": "High",
+          "incident_count": 13
+        },
+        {
+          "frame": 980,
+          "timestamp_seconds": 16.61,
+          "vehicle_count": 86,
+          "average_speed_kmh": 34.28,
+          "traffic_density": "High",
+          "incident_count": 12
+        },
+        {
+          "frame": 985,
+          "timestamp_seconds": 16.69,
+          "vehicle_count": 88,
+          "average_speed_kmh": 38.08,
+          "traffic_density": "High",
+          "incident_count": 13
+        },
+        {
+          "frame": 990,
+          "timestamp_seconds": 16.78,
+          "vehicle_count": 83,
+          "average_speed_kmh": 41.63,
+          "traffic_density": "High",
+          "incident_count": 16
+        },
+        {
+          "frame": 995,
+          "timestamp_seconds": 16.86,
+          "vehicle_count": 81,
+          "average_speed_kmh": 39.48,
+          "traffic_density": "High",
+          "incident_count": 13
+        },
+        {
+          "frame": 1000,
+          "timestamp_seconds": 16.95,
+          "vehicle_count": 79,
+          "average_speed_kmh": 39.67,
+          "traffic_density": "High",
+          "incident_count": 14
+        },
+        {
+          "frame": 1005,
+          "timestamp_seconds": 17.03,
+          "vehicle_count": 78,
+          "average_speed_kmh": 42.86,
+          "traffic_density": "High",
+          "incident_count": 16
+        },
+        {
+          "frame": 1010,
+          "timestamp_seconds": 17.12,
+          "vehicle_count": 76,
+          "average_speed_kmh": 49.06,
+          "traffic_density": "High",
+          "incident_count": 20
+        },
+        {
+          "frame": 1015,
+          "timestamp_seconds": 17.2,
+          "vehicle_count": 79,
+          "average_speed_kmh": 41.96,
+          "traffic_density": "High",
+          "incident_count": 20
+        },
+        {
+          "frame": 1020,
+          "timestamp_seconds": 17.29,
+          "vehicle_count": 77,
+          "average_speed_kmh": 49.23,
+          "traffic_density": "High",
+          "incident_count": 20
+        },
+        {
+          "frame": 1025,
+          "timestamp_seconds": 17.37,
+          "vehicle_count": 83,
+          "average_speed_kmh": 46.26,
+          "traffic_density": "High",
+          "incident_count": 21
+        },
+        {
+          "frame": 1030,
+          "timestamp_seconds": 17.46,
+          "vehicle_count": 86,
+          "average_speed_kmh": 41.56,
+          "traffic_density": "High",
+          "incident_count": 19
+        }
+      ]
+    }
+  }
+]

@@ -14,8 +14,14 @@ from routes.video_routes import video_bp
 def create_app():
     app = Flask(__name__)
 
+   
+
     # Load configuration
     app.config.from_object(Config)
+
+    app.config["MAX_CONTENT_LENGTH"] = (
+        1 * 1024 * 1024 * 1024
+    )
 
     # Enable React frontend -> Flask backend communication
     CORS(app)

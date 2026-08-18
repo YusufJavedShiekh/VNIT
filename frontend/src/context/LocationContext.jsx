@@ -35,28 +35,49 @@ export function LocationProvider({
   const [location, setLocation] =
     useState(DEFAULT_LOCATION);
 
+  /*
+   * ---------------------------------------------------------
+   * SELECT ENTIRE NAGPUR
+   * ---------------------------------------------------------
+   */
+
   const selectNagpur = () => {
-    setLocation(DEFAULT_LOCATION);
+    setLocation({
+      ...DEFAULT_LOCATION,
+    });
   };
+
+  /*
+   * ---------------------------------------------------------
+   * SELECT AREA
+   * ---------------------------------------------------------
+   */
 
   const selectArea = ({
     area,
     lat,
     lng,
-    source = "area-selector",
+    displayName = area,
+    source = "area-search",
   }) => {
     setLocation({
       scope: "area",
 
-      area,
-
+      area: area || "",
       street: "",
       policeStation: "",
 
-      displayName: area,
+      displayName,
 
-      lat,
-      lng,
+      lat:
+        Number.isFinite(Number(lat))
+          ? Number(lat)
+          : NAGPUR_CENTER.lat,
+
+      lng:
+        Number.isFinite(Number(lng))
+          ? Number(lng)
+          : NAGPUR_CENTER.lng,
 
       zoom: 14,
 
@@ -64,31 +85,47 @@ export function LocationProvider({
     });
   };
 
+  /*
+   * ---------------------------------------------------------
+   * SELECT STREET
+   * ---------------------------------------------------------
+   */
+
   const selectStreet = ({
     area = "",
     street,
     lat,
     lng,
-    policeStation = "",
-    source = "street-selector",
+    displayName = street,
+    source = "street-search",
   }) => {
     setLocation({
       scope: "street",
 
-      area,
-      street,
-      policeStation,
+      area: area || "",
+      street: street || "",
+      policeStation: "",
 
-      displayName: street,
+      displayName,
 
-      lat,
-      lng,
+      lat: Number(lat),
+      lng: Number(lng),
 
       zoom: 17,
 
       source,
     });
   };
+
+  /*
+   * ---------------------------------------------------------
+   * POLICE STATION
+   *
+   * Kept for compatibility with other VIGIL components.
+   *
+   * It is NOT used by the new Dashboard search bar.
+   * ---------------------------------------------------------
+   */
 
   const selectPoliceStation = ({
     area = "",
@@ -108,8 +145,8 @@ export function LocationProvider({
 
       displayName: policeStation,
 
-      lat,
-      lng,
+      lat: Number(lat),
+      lng: Number(lng),
 
       zoom: 16,
 
@@ -117,38 +154,77 @@ export function LocationProvider({
     });
   };
 
+  /*
+   * ---------------------------------------------------------
+   * GENERIC SEARCH RESULT
+   * ---------------------------------------------------------
+   *
+   * Kept so existing VIGIL components can still use it.
+   * The Dashboard has its own Nagpur-only search handling.
+   * ---------------------------------------------------------
+   */
+
   const selectSearchResult = (
     result
   ) => {
-    const address = result.address || {};
+    const address =
+      result?.address || {};
 
     const detectedArea =
-      result.neighbourhood ||
-      result.address?.suburb ||
-      result.address?.quarter ||
+      address.suburb ||
+      address.neighbourhood ||
+      address.city_district ||
+      address.quarter ||
       "";
 
     const detectedStreet =
-      result.road || "";
+      address.road || "";
+
+    const resultName =
+      result?.name ||
+      result?.display_name ||
+      "";
+
+    const type =
+      (
+        result?.type ||
+        ""
+      ).toLowerCase();
+
+    const roadTypes = [
+      "road",
+      "residential",
+      "tertiary",
+      "secondary",
+      "primary",
+      "pedestrian",
+      "living_street",
+      "service",
+      "unclassified",
+      "path",
+      "footway",
+      "cycleway",
+      "track",
+    ];
 
     /*
-     * If the result is a road/street,
-     * retain the parent area.
+     * Street / road
      */
 
     if (
-      result.type === "road" ||
-      result.type === "residential" ||
-      result.type === "pedestrian" ||
-      result.type === "path"
+      detectedStreet &&
+      roadTypes.includes(type)
     ) {
       selectStreet({
         area: detectedArea,
         street:
           detectedStreet ||
-          result.name,
-        lat: result.lat,
-        lng: result.lng,
+          resultName,
+        lat: result?.lat,
+        lng: result?.lon,
+        displayName:
+          detectedStreet ||
+          resultName,
         source: "direct-search",
       });
 
@@ -156,25 +232,42 @@ export function LocationProvider({
     }
 
     /*
-     * Otherwise treat it as an area/location.
+     * Area
      */
 
     selectArea({
       area:
-        result.name ||
         detectedArea ||
+        resultName ||
         "Selected Nagpur Location",
 
-      lat: result.lat,
-      lng: result.lng,
+      lat: result?.lat,
+      lng: result?.lon,
+
+      displayName:
+        detectedArea ||
+        resultName ||
+        "Selected Nagpur Location",
 
       source: "direct-search",
     });
   };
 
+  /*
+   * ---------------------------------------------------------
+   * CONTEXT VALUE
+   * ---------------------------------------------------------
+   *
+   * setLocation is intentionally exposed because the existing
+   * Dashboard and other VIGIL components use it.
+   * ---------------------------------------------------------
+   */
+
   const value = useMemo(
     () => ({
       location,
+
+      setLocation,
 
       selectNagpur,
       selectArea,

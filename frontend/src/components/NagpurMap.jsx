@@ -1,66 +1,389 @@
+import { useEffect } from "react";
+
 import {
   MapContainer,
   TileLayer,
-  Marker,
-  Popup,
   useMap,
 } from "react-leaflet";
 
-import { useEffect, useMemo } from "react";
-
-import "leaflet.heat";
 import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import "leaflet.heat";
+
+import { NAGPUR_CENTER } from "../data/nagpurLocations";
+
+import { useLocation } from "../context/LocationContext";
 
 import {
-  NAGPUR_CENTER,
-  NAGPUR_BOUNDS,
-} from "../data/nagpurLocations";
-
-import {
-  incidents,
+  areaSituation,
 } from "../data/vigilMockData";
 
-import {
-  useLocation,
-} from "../context/LocationContext";
 
-import "leaflet/dist/leaflet.css";
+/*
+ * =========================================================
+ * MAP SETTINGS
+ * =========================================================
+ */
+
+const DEFAULT_ZOOM = 11;
 
 
-// ======================================================
-// MAP CONTROLLER
-// ======================================================
+/*
+ * =========================================================
+ * HEATMAP GRADIENT
+ *
+ * Green  -> Low
+ * Yellow -> Moderate
+ * Orange -> High
+ * Red    -> Critical
+ * =========================================================
+ */
+
+const HEAT_GRADIENT = {
+  0.00: "#16a34a",
+  0.25: "#22c55e",
+  0.45: "#facc15",
+  0.65: "#f59e0b",
+  0.80: "#f97316",
+  1.00: "#dc2626",
+};
+
+
+/*
+ * =========================================================
+ * NAGPUR AREA COORDINATES
+ *
+ * These are map visualization coordinates for the
+ * current VIGIL frontend mock-data stage.
+ *
+ * The backend will eventually replace these with
+ * real CCTV / traffic coordinates.
+ * =========================================================
+ */
+
+const NAGPUR_AREA_COORDINATES = {
+
+  "Sadar": [
+    21.1577,
+    79.0882,
+  ],
+
+  "Sitabuldi": [
+    21.1458,
+    79.0882,
+  ],
+
+  "Dharampeth": [
+    21.1491,
+    79.0688,
+  ],
+
+  "Civil Lines": [
+    21.1535,
+    79.0722,
+  ],
+
+  "Mahal": [
+    21.1415,
+    79.1010,
+  ],
+
+  "Itwari": [
+    21.1550,
+    79.1025,
+  ],
+
+  "Dhantoli": [
+    21.1320,
+    79.0880,
+  ],
+
+  "Laxmi Nagar": [
+    21.1307,
+    79.0618,
+  ],
+
+  "Ambazari": [
+    21.1430,
+    79.0465,
+  ],
+
+  "Ajni": [
+    21.1217,
+    79.0915,
+  ],
+
+  "Manish Nagar": [
+    21.1075,
+    79.0805,
+  ],
+
+  "Wardha Road": [
+    21.1178,
+    79.0918,
+  ],
+
+  "Ganeshpeth": [
+    21.1365,
+    79.0935,
+  ],
+
+  "Cotton Market": [
+    21.1370,
+    79.0980,
+  ],
+
+  "Gandhibagh": [
+    21.1445,
+    79.0990,
+  ],
+
+  "Nandanvan": [
+    21.1320,
+    79.1235,
+  ],
+
+  "Sakkardara": [
+    21.1250,
+    79.1160,
+  ],
+
+  "Pratap Nagar": [
+    21.1190,
+    79.0475,
+  ],
+
+  "Bajaj Nagar": [
+    21.1325,
+    79.0555,
+  ],
+
+  "Mankapur": [
+    21.1780,
+    79.0820,
+  ],
+
+  "Gittikhadan": [
+    21.1755,
+    79.0530,
+  ],
+
+  "Jaripatka": [
+    21.1785,
+    79.1030,
+  ],
+
+  "Wadi": [
+    21.1450,
+    79.0150,
+  ],
+
+  "Hudkeshwar": [
+    21.0980,
+    79.1160,
+  ],
+
+  "Sonegaon": [
+    21.1125,
+    79.0900,
+  ],
+
+  "Lakadganj": [
+    21.1580,
+    79.1165,
+  ],
+};
+
+
+/*
+ * =========================================================
+ * NORMALIZE AREA NAME
+ * =========================================================
+ */
+
+function normalizeAreaName(
+  name = ""
+) {
+  return String(name)
+    .trim()
+    .toLowerCase();
+}
+
+
+/*
+ * =========================================================
+ * FIND AREA COORDINATES
+ * =========================================================
+ */
+
+function getAreaCoordinates(
+  areaName
+) {
+  if (!areaName) {
+    return null;
+  }
+
+  const target =
+    normalizeAreaName(
+      areaName
+    );
+
+  const entry =
+    Object.entries(
+      NAGPUR_AREA_COORDINATES
+    ).find(
+      ([area]) =>
+        normalizeAreaName(
+          area
+        ) === target
+    );
+
+  return entry
+    ? entry[1]
+    : null;
+}
+
+
+/*
+ * =========================================================
+ * GET AREA RISK
+ * =========================================================
+ */
+
+function getAreaRisk(
+  areaName
+) {
+  if (!areaName) {
+    return 0;
+  }
+
+  const target =
+    normalizeAreaName(
+      areaName
+    );
+
+  const entry =
+    Object.entries(
+      areaSituation || {}
+    ).find(
+      ([area]) =>
+        normalizeAreaName(
+          area
+        ) === target
+    );
+
+  return Number(
+    entry?.[1]?.riskScore
+  ) || Number(
+    entry?.[1]?.trafficDensity
+  ) || 50;
+}
+
+
+/*
+ * =========================================================
+ * RISK -> HEAT INTENSITY
+ * =========================================================
+ */
+
+function getIntensity(
+  risk
+) {
+  const value =
+    Number(risk) || 0;
+
+  return Math.max(
+    0.12,
+    Math.min(
+      value / 100,
+      1
+    )
+  );
+}
+
+
+/*
+ * =========================================================
+ * CREATE CITY HEAT POINTS
+ *
+ * One heat cluster for EVERY VIGIL area.
+ * =========================================================
+ */
+
+function createNagpurHeatPoints() {
+
+  return Object.entries(
+    NAGPUR_AREA_COORDINATES
+  )
+    .map(
+      ([area, coordinates]) => {
+
+        const risk =
+          getAreaRisk(
+            area
+          );
+
+        const intensity =
+          getIntensity(
+            risk
+          );
+
+        return [
+          coordinates[0],
+          coordinates[1],
+          intensity,
+        ];
+      }
+    );
+}
+
+
+/*
+ * =========================================================
+ * MAP CONTROLLER
+ *
+ * Nagpur -> zoom 11
+ * Area   -> zoom 14
+ * Street -> zoom 17
+ * =========================================================
+ */
 
 function MapController({
-  selectedLocation,
+  location,
 }) {
 
-  const map = useMap();
-
-  const { location } =
-    useLocation();
+  const map =
+    useMap();
 
 
   useEffect(() => {
 
-    // --------------------------------------------------
-    // PRIORITY 1:
-    // Location selected from the new dashboard search
-    // --------------------------------------------------
+    const lat =
+      Number(location?.lat);
+
+    const lng =
+      Number(location?.lng);
+
+
+    /*
+     * -------------------------------------------------------
+     * NAGPUR
+     * -------------------------------------------------------
+     */
 
     if (
-      selectedLocation &&
-      selectedLocation.latitude != null &&
-      selectedLocation.longitude != null
+      location?.scope ===
+        "nagpur"
     ) {
 
       map.flyTo(
         [
-          selectedLocation.latitude,
-          selectedLocation.longitude,
+          NAGPUR_CENTER.lat,
+          NAGPUR_CENTER.lng,
         ],
-        16,
+        DEFAULT_ZOOM,
         {
+          animate: true,
           duration: 1.2,
         }
       );
@@ -69,35 +392,38 @@ function MapController({
     }
 
 
-    // --------------------------------------------------
-    // PRIORITY 2:
-    // Existing LocationContext
-    // --------------------------------------------------
+    /*
+     * -------------------------------------------------------
+     * SEARCHED AREA / STREET
+     * -------------------------------------------------------
+     */
 
     if (
-      location.lat != null &&
-      location.lng != null
+      Number.isFinite(lat) &&
+      Number.isFinite(lng)
     ) {
 
       map.flyTo(
         [
-          location.lat,
-          location.lng,
+          lat,
+          lng,
         ],
-        location.zoom || 11,
+        Number(
+          location.zoom
+        ) || 14,
         {
+          animate: true,
           duration: 1.2,
         }
       );
-
     }
 
   }, [
-    selectedLocation,
-    location.lat,
-    location.lng,
-    location.zoom,
     map,
+    location?.scope,
+    location?.lat,
+    location?.lng,
+    location?.zoom,
   ]);
 
 
@@ -105,268 +431,325 @@ function MapController({
 }
 
 
-// ======================================================
-// HEAT LAYER
-// ======================================================
+/*
+ * =========================================================
+ * HEATMAP LAYER
+ * =========================================================
+ */
 
-function HeatLayer({
-  selectedLocation,
+function HeatMapLayer({
+  location,
 }) {
 
-  const map = useMap();
+  const map =
+    useMap();
 
-  const { location } =
-    useLocation();
-
-
-  const points = useMemo(() => {
-
-    // --------------------------------------------------
-    // Determine current location
-    // --------------------------------------------------
-
-    const latitude =
-      selectedLocation?.latitude ??
-      location.lat ??
-      NAGPUR_CENTER.lat;
-
-
-    const longitude =
-      selectedLocation?.longitude ??
-      location.lng ??
-      NAGPUR_CENTER.lng;
-
-
-    // --------------------------------------------------
-    // Determine selected road / area
-    // --------------------------------------------------
-
-    const selectedRoad =
-      selectedLocation?.road ||
-      location.street ||
-      null;
-
-
-    const selectedArea =
-      selectedLocation?.area ||
-      location.area ||
-      null;
-
-
-    // --------------------------------------------------
-    // Find relevant incidents
-    // --------------------------------------------------
-
-    let relevantIncidents =
-      incidents;
-
-
-    if (selectedRoad) {
-
-      relevantIncidents =
-        incidents.filter(
-          (incident) => {
-
-            if (!incident.road) {
-              return false;
-            }
-
-            return (
-              incident.road
-                .toLowerCase()
-                .includes(
-                  selectedRoad.toLowerCase()
-                )
-            );
-
-          }
-        );
-
-    } else if (selectedArea) {
-
-      relevantIncidents =
-        incidents.filter(
-          (incident) =>
-            incident.area ===
-            selectedArea
-        );
-
-    } else if (
-      location.scope ===
-      "nagpur"
-    ) {
-
-      relevantIncidents =
-        incidents;
-
-    }
-
-
-    // --------------------------------------------------
-    // IMPORTANT:
-    //
-    // Only use real coordinates if the incident
-    // actually contains coordinates.
-    //
-    // We do NOT create fake road coordinates.
-    // --------------------------------------------------
-
-    const coordinatePoints =
-      relevantIncidents
-        .filter(
-          (incident) =>
-            incident.lat != null &&
-            incident.lng != null
-        )
-        .map(
-          (incident) => {
-
-            let intensity =
-              0.45;
-
-
-            if (
-              incident.severity ===
-              "Critical"
-            ) {
-
-              intensity = 1;
-
-            } else if (
-              incident.severity ===
-              "High"
-            ) {
-
-              intensity = 0.8;
-
-            } else if (
-              incident.severity ===
-              "Medium"
-            ) {
-
-              intensity = 0.6;
-
-            } else {
-
-              intensity = 0.35;
-
-            }
-
-
-            return [
-              Number(incident.lat),
-              Number(incident.lng),
-              intensity,
-            ];
-
-          }
-        );
-
-
-    // --------------------------------------------------
-    // If actual traffic/incident coordinates exist,
-    // use them.
-    // --------------------------------------------------
-
-    if (
-      coordinatePoints.length > 0
-    ) {
-
-      return coordinatePoints;
-
-    }
-
-
-    // --------------------------------------------------
-    // NO DATA
-    //
-    // Show a yellow heat point instead of
-    // inventing a risk score.
-    // --------------------------------------------------
-
-    return [
-      [
-        latitude,
-        longitude,
-        0.25,
-      ],
-    ];
-
-  }, [
-    selectedLocation,
-    location,
-  ]);
-
-
-  // --------------------------------------------------
-  // Create / update heatmap
-  // --------------------------------------------------
 
   useEffect(() => {
 
-    if (!L.heatLayer) {
+    /*
+     * -------------------------------------------------------
+     * REMOVE OLD HEATMAP
+     * -------------------------------------------------------
+     */
 
-      console.warn(
-        "leaflet.heat is not loaded."
+    const oldHeatLayers = [];
+
+    map.eachLayer(
+      (layer) => {
+
+        if (
+          layer instanceof
+          L.HeatLayer
+        ) {
+          oldHeatLayers.push(
+            layer
+          );
+        }
+
+      }
+    );
+
+    oldHeatLayers.forEach(
+      (layer) => {
+
+        if (
+          map.hasLayer(
+            layer
+          )
+        ) {
+          map.removeLayer(
+            layer
+          );
+        }
+
+      }
+    );
+
+
+    /*
+     * =======================================================
+     * CASE 1
+     *
+     * ENTIRE NAGPUR
+     * =======================================================
+     */
+
+    if (
+      location?.scope ===
+        "nagpur"
+    ) {
+
+      const cityPoints =
+        createNagpurHeatPoints();
+
+
+      const heatLayer =
+        L.heatLayer(
+          cityPoints,
+          {
+            radius: 42,
+
+            blur: 30,
+
+            maxZoom: 16,
+
+            max: 1,
+
+            minOpacity: 0.45,
+
+            gradient:
+              HEAT_GRADIENT,
+          }
+        );
+
+
+      heatLayer.addTo(
+        map
       );
 
-      return;
 
+      return () => {
+
+        if (
+          map.hasLayer(
+            heatLayer
+          )
+        ) {
+          map.removeLayer(
+            heatLayer
+          );
+        }
+
+      };
     }
 
 
-    const heat =
+    /*
+     * =======================================================
+     * CASE 2
+     *
+     * SEARCHED AREA / STREET
+     * =======================================================
+     */
+
+    const lat =
+      Number(location?.lat);
+
+    const lng =
+      Number(location?.lng);
+
+
+    if (
+      !Number.isFinite(lat) ||
+      !Number.isFinite(lng)
+    ) {
+
+      return undefined;
+    }
+
+
+    /*
+     * Try to get actual mock-data risk
+     * for the selected area.
+     */
+
+    const areaRisk =
+      getAreaRisk(
+        location?.area
+      );
+
+
+    /*
+     * If the search result belongs to
+     * one of our VIGIL areas, use its
+     * actual mock risk.
+     *
+     * Otherwise use 70 as a sensible
+     * selected-location default.
+     */
+
+    const risk =
+      location?.area &&
+      getAreaCoordinates(
+        location.area
+      )
+        ? areaRisk
+        : 70;
+
+
+    const intensity =
+      getIntensity(
+        risk
+      );
+
+
+    /*
+     * -------------------------------------------------------
+     * CREATE A LOCAL HEAT CLUSTER
+     * -------------------------------------------------------
+     *
+     * This creates a smooth heat region
+     * instead of one tiny dot.
+     */
+
+    const selectedPoints = [
+
+      [
+        lat,
+        lng,
+        intensity,
+      ],
+
+      [
+        lat + 0.002,
+        lng,
+        intensity * 0.92,
+      ],
+
+      [
+        lat - 0.002,
+        lng,
+        intensity * 0.92,
+      ],
+
+      [
+        lat,
+        lng + 0.002,
+        intensity * 0.92,
+      ],
+
+      [
+        lat,
+        lng - 0.002,
+        intensity * 0.92,
+      ],
+
+      [
+        lat + 0.004,
+        lng + 0.002,
+        intensity * 0.72,
+      ],
+
+      [
+        lat - 0.004,
+        lng - 0.002,
+        intensity * 0.72,
+      ],
+
+      [
+        lat + 0.002,
+        lng - 0.004,
+        intensity * 0.72,
+      ],
+
+      [
+        lat - 0.002,
+        lng + 0.004,
+        intensity * 0.72,
+      ],
+
+      [
+        lat + 0.006,
+        lng,
+        intensity * 0.48,
+      ],
+
+      [
+        lat - 0.006,
+        lng,
+        intensity * 0.48,
+      ],
+
+      [
+        lat,
+        lng + 0.006,
+        intensity * 0.48,
+      ],
+
+      [
+        lat,
+        lng - 0.006,
+        intensity * 0.48,
+      ],
+    ];
+
+
+    const heatLayer =
       L.heatLayer(
-        points,
+        selectedPoints,
         {
+          radius:
+            location?.scope ===
+            "street"
+              ? 38
+              : 50,
 
-          radius: 45,
-
-          blur: 30,
+          blur:
+            location?.scope ===
+            "street"
+              ? 28
+              : 34,
 
           maxZoom: 18,
 
           max: 1,
 
-          // ------------------------------------------------
-          // Yellow is deliberately used for the lowest
-          // intensity / no-data state.
-          // ------------------------------------------------
+          minOpacity: 0.55,
 
-          gradient: {
-
-            0.0:
-              "#fde047",
-
-            0.25:
-              "#facc15",
-
-            0.5:
-              "#fb923c",
-
-            0.75:
-              "#ef4444",
-
-            1.0:
-              "#991b1b",
-
-          },
-
+          gradient:
+            HEAT_GRADIENT,
         }
-      ).addTo(map);
+      );
+
+
+    heatLayer.addTo(
+      map
+    );
 
 
     return () => {
 
-      map.removeLayer(
-        heat
-      );
+      if (
+        map.hasLayer(
+          heatLayer
+        )
+      ) {
+        map.removeLayer(
+          heatLayer
+        );
+      }
 
     };
 
   }, [
     map,
-    points,
+    location?.scope,
+    location?.area,
+    location?.street,
+    location?.lat,
+    location?.lng,
+    location?.zoom,
   ]);
 
 
@@ -374,267 +757,287 @@ function HeatLayer({
 }
 
 
-// ======================================================
-// LOCATION MARKER
-// ======================================================
+/*
+ * =========================================================
+ * SELECTED LOCATION MARKER
+ * =========================================================
+ */
 
-function LocationMarker({
-  selectedLocation,
+function SelectedLocationMarker({
+  location,
 }) {
 
-  const { location } =
-    useLocation();
+  const map =
+    useMap();
 
 
-  // --------------------------------------------------
-  // Search-selected location gets priority
-  // --------------------------------------------------
+  useEffect(() => {
 
-  if (
-    selectedLocation &&
-    selectedLocation.latitude != null &&
-    selectedLocation.longitude != null
-  ) {
+    /*
+     * Remove old VIGIL marker.
+     */
 
-    return (
+    map.eachLayer(
+      (layer) => {
 
-      <Marker
-        position={[
-          selectedLocation.latitude,
-          selectedLocation.longitude,
-        ]}
-      >
+        if (
+          layer instanceof
+            L.CircleMarker &&
+          layer.options?.className ===
+            "vigil-selected-marker"
+        ) {
 
-        <Popup>
+          map.removeLayer(
+            layer
+          );
 
-          <div className="min-w-[190px]">
+        }
 
-            <strong>
-              {selectedLocation.road ||
-                selectedLocation.displayName}
-            </strong>
-
-
-            <br />
-
-
-            <span>
-              Area:{" "}
-              {selectedLocation.area ||
-                "Nagpur"}
-            </span>
-
-
-            {selectedLocation.station && (
-
-              <>
-                <br />
-
-                <span>
-                  Police Station:{" "}
-                  {selectedLocation.station}
-                </span>
-              </>
-
-            )}
-
-
-            <br />
-
-            <span>
-              Coordinates:{" "}
-              {selectedLocation.latitude.toFixed(
-                5
-              )}
-              ,{" "}
-              {selectedLocation.longitude.toFixed(
-                5
-              )}
-            </span>
-
-          </div>
-
-        </Popup>
-
-      </Marker>
-
+      }
     );
 
-  }
+
+    /*
+     * Don't show marker for entire Nagpur.
+     */
+
+    if (
+      location?.scope ===
+        "nagpur"
+    ) {
+      return;
+    }
 
 
-  // --------------------------------------------------
-  // Existing LocationContext marker
-  // --------------------------------------------------
+    const lat =
+      Number(location?.lat);
 
-  if (
-    location.scope ===
-    "nagpur"
-  ) {
-
-    return null;
-
-  }
+    const lng =
+      Number(location?.lng);
 
 
-  if (
-    location.lat == null ||
-    location.lng == null
-  ) {
+    if (
+      !Number.isFinite(lat) ||
+      !Number.isFinite(lng)
+    ) {
+      return;
+    }
 
-    return null;
 
-  }
+    const marker =
+      L.circleMarker(
+        [
+          lat,
+          lng,
+        ],
+        {
+          radius: 7,
 
+          className:
+            "vigil-selected-marker",
+
+          color: "#ffffff",
+
+          weight: 3,
+
+          fillColor:
+            "#2563eb",
+
+          fillOpacity: 1,
+        }
+      );
+
+
+    marker
+      .bindPopup(
+        `
+        <div style="min-width:180px">
+          <strong>
+            ${
+              location?.displayName ||
+              location?.street ||
+              location?.area ||
+              "Selected Location"
+            }
+          </strong>
+
+          ${
+            location?.street
+              ? `<br/><span>Road: ${location.street}</span>`
+              : ""
+          }
+
+          ${
+            location?.area
+              ? `<br/><span>Area: ${location.area}</span>`
+              : ""
+          }
+        </div>
+        `
+      )
+      .addTo(map);
+
+
+    return () => {
+
+      if (
+        map.hasLayer(
+          marker
+        )
+      ) {
+        map.removeLayer(
+          marker
+        );
+      }
+
+    };
+
+  }, [
+    map,
+    location?.scope,
+    location?.lat,
+    location?.lng,
+    location?.displayName,
+    location?.area,
+    location?.street,
+  ]);
+
+
+  return null;
+}
+
+
+/*
+ * =========================================================
+ * MAP STATUS
+ * =========================================================
+ */
+
+function MapStatus({
+  location,
+}) {
 
   return (
+    <div className="pointer-events-none absolute left-4 top-4 z-[500] rounded-xl border border-slate-200 bg-white/95 px-4 py-3 shadow-lg backdrop-blur">
 
-    <Marker
-      position={[
-        location.lat,
-        location.lng,
-      ]}
-    >
+      <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+        VIGIL Heatmap
+      </p>
 
-      <Popup>
+      <p className="mt-1 text-sm font-bold text-slate-800">
+        {
+          location?.scope ===
+          "nagpur"
+            ? "Entire Nagpur City"
+            : location?.street ||
+              location?.area ||
+              location?.displayName ||
+              "Selected Location"
+        }
+      </p>
 
-        <strong>
-          {location.displayName}
-        </strong>
+      <div className="mt-2 flex items-center gap-3 text-[10px] font-semibold">
 
+        <span className="flex items-center gap-1">
+          <span className="h-2.5 w-2.5 rounded-full bg-green-500" />
+          Low
+        </span>
 
-        {location.area && (
+        <span className="flex items-center gap-1">
+          <span className="h-2.5 w-2.5 rounded-full bg-yellow-400" />
+          Moderate
+        </span>
 
-          <>
-            <br />
+        <span className="flex items-center gap-1">
+          <span className="h-2.5 w-2.5 rounded-full bg-orange-500" />
+          High
+        </span>
 
-            Area:{" "}
-            {location.area}
-          </>
+        <span className="flex items-center gap-1">
+          <span className="h-2.5 w-2.5 rounded-full bg-red-600" />
+          Critical
+        </span>
 
-        )}
+      </div>
 
-
-        {location.street && (
-
-          <>
-            <br />
-
-            Street:{" "}
-            {location.street}
-          </>
-
-        )}
-
-
-        {location.policeStation && (
-
-          <>
-            <br />
-
-            Police Station:{" "}
-            {location.policeStation}
-          </>
-
-        )}
-
-      </Popup>
-
-    </Marker>
-
+    </div>
   );
 }
 
 
-// ======================================================
-// NAGPUR MAP
-// ======================================================
+/*
+ * =========================================================
+ * NAGPUR MAP
+ * =========================================================
+ */
 
-function NagpurMap({
-  selectedLocation,
-}) {
+function NagpurMap() {
+
+  /*
+   * IMPORTANT:
+   *
+   * We read LocationContext directly here.
+   *
+   * Therefore Dashboard does NOT need to pass
+   * selectedLocation as a prop.
+   */
+
+  const {
+    location,
+  } = useLocation();
+
 
   return (
+    <div className="relative h-full w-full">
 
-    <MapContainer
+      <MapContainer
+        center={[
+          NAGPUR_CENTER.lat,
+          NAGPUR_CENTER.lng,
+        ]}
+        zoom={DEFAULT_ZOOM}
+        minZoom={10}
+        maxZoom={18}
+        scrollWheelZoom={true}
+        className="h-full w-full"
+      >
 
-      center={[
-        NAGPUR_CENTER.lat,
-        NAGPUR_CENTER.lng,
-      ]}
-
-      zoom={11}
-
-      minZoom={10}
-
-      maxZoom={19}
-
-      maxBounds={[
-        [
-          NAGPUR_BOUNDS.south,
-          NAGPUR_BOUNDS.west,
-        ],
-        [
-          NAGPUR_BOUNDS.north,
-          NAGPUR_BOUNDS.east,
-        ],
-      ]}
-
-      maxBoundsViscosity={1.0}
-
-      scrollWheelZoom={true}
-
-      className="h-full w-full"
-
-    >
-
-      {/* -----------------------------------------------
-          OpenStreetMap
-      ------------------------------------------------ */}
-
-      <TileLayer
-
-        attribution="&copy; OpenStreetMap contributors"
-
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-
-      />
+        <TileLayer
+          attribution="&copy; OpenStreetMap contributors"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
 
 
-      {/* -----------------------------------------------
-          Automatically zoom to selected location
-      ------------------------------------------------ */}
+        <MapController
+          location={
+            location
+          }
+        />
 
-      <MapController
-        selectedLocation={
-          selectedLocation
+
+        <HeatMapLayer
+          location={
+            location
+          }
+        />
+
+
+        <SelectedLocationMarker
+          location={
+            location
+          }
+        />
+
+      </MapContainer>
+
+
+      <MapStatus
+        location={
+          location
         }
       />
 
-
-      {/* -----------------------------------------------
-          Traffic / risk heatmap
-      ------------------------------------------------ */}
-
-      <HeatLayer
-        selectedLocation={
-          selectedLocation
-        }
-      />
-
-
-      {/* -----------------------------------------------
-          Selected location marker
-      ------------------------------------------------ */}
-
-      <LocationMarker
-        selectedLocation={
-          selectedLocation
-        }
-      />
-
-    </MapContainer>
-
+    </div>
   );
 }
 

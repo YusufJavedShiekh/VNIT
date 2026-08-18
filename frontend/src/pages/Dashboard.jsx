@@ -1,8 +1,14 @@
-import { useEffect, useMemo, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 import NagpurMap from "../components/NagpurMap";
 
-import { useLocation } from "../context/LocationContext";
+import {
+  useLocation,
+} from "../context/LocationContext";
 
 import {
   citySituation,
@@ -10,631 +16,992 @@ import {
   incidents,
 } from "../data/vigilMockData";
 
+import {
+  NAGPUR_BOUNDS,
+} from "../data/nagpurLocations";
+
+
 function Dashboard() {
-  const { location, setLocation } = useLocation();
 
-  const [areaQuery, setAreaQuery] = useState("");
-  const [roadQuery, setRoadQuery] = useState("");
+  const {
+    location,
+    setLocation,
+  } = useLocation();
 
-  const [areaResults, setAreaResults] = useState([]);
-  const [roadResults, setRoadResults] = useState([]);
-
-  const [selectedArea, setSelectedArea] = useState(
-    location?.area || ""
-  );
-
-  const [selectedRoad, setSelectedRoad] = useState(
-    location?.street || ""
-  );
-
-  const [loadingAreas, setLoadingAreas] = useState(false);
-  const [loadingRoads, setLoadingRoads] = useState(false);
-
-  const [searchError, setSearchError] = useState("");
 
   /*
-   * ---------------------------------------------------------
-   * CURRENT LOCATION DATA
-   * ---------------------------------------------------------
+   * =========================================================
+   * SEARCH
+   * =========================================================
+   */
+
+  const [
+    searchQuery,
+    setSearchQuery,
+  ] = useState("");
+
+  const [
+    searchResults,
+    setSearchResults,
+  ] = useState([]);
+
+  const [
+    loadingSearch,
+    setLoadingSearch,
+  ] = useState(false);
+
+  const [
+    searchError,
+    setSearchError,
+  ] = useState("");
+
+
+  /*
+   * =========================================================
+   * LOCATION STATE
+   * =========================================================
+   */
+
+  const hasSelectedLocation =
+    location?.scope === "area" ||
+    location?.scope === "street";
+
+  const selectedArea =
+    location?.area || "";
+
+  const selectedRoad =
+    location?.street || "";
+
+
+  /*
+   * =========================================================
+   * SELECTED AREA DATA
+   * =========================================================
    */
 
   const selectedAreaData =
-    areaSituation[selectedArea] || null;
+    areaSituation[
+      selectedArea
+    ] || null;
+
 
   /*
-   * ---------------------------------------------------------
-   * INCIDENT DATA
-   * ---------------------------------------------------------
-   */
-
-  const visibleIncidents = useMemo(() => {
-    if (!selectedArea && location?.scope === "nagpur") {
-      return incidents;
-    }
-
-    if (selectedArea) {
-      return incidents.filter(
-        (incident) =>
-          incident.area?.toLowerCase() ===
-          selectedArea.toLowerCase()
-      );
-    }
-
-    return incidents;
-  }, [
-    selectedArea,
-    location?.scope,
-  ]);
-
-  /*
-   * ---------------------------------------------------------
-   * SEARCH NAGPUR AREAS
-   *
-   * This uses OpenStreetMap/Nominatim for the development
-   * version.
-   *
-   * IMPORTANT:
-   * Nominatim should NOT be used for autocomplete or bulk
-   * downloading of all roads.
-   *
-   * Later we will move this request to the VIGIL backend.
-   * ---------------------------------------------------------
+   * =========================================================
+   * SEARCH NAGPUR
+   * =========================================================
    */
 
   useEffect(() => {
-    if (!areaQuery.trim()) {
-      setAreaResults([]);
-      return;
-    }
 
-    const controller = new AbortController();
-
-    const timer = setTimeout(async () => {
-      try {
-        setLoadingAreas(true);
-        setSearchError("");
-
-        const params = new URLSearchParams({
-          q: `${areaQuery}, Nagpur, Maharashtra, India`,
-          format: "jsonv2",
-          addressdetails: "1",
-          limit: "8",
-          countrycodes: "in",
-        });
-
-        const response = await fetch(
-          `https://nominatim.openstreetmap.org/search?${params}`,
-          {
-            signal: controller.signal,
-            headers: {
-              Accept: "application/json",
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(
-            "Location search failed."
-          );
-        }
-
-        const data = await response.json();
-
-        const nagpurResults = data.filter((item) => {
-          const address = item.address || {};
-
-          const city =
-            address.city ||
-            address.town ||
-            address.municipality ||
-            "";
-
-          return city
-            .toLowerCase()
-            .includes("nagpur");
-        });
-
-        setAreaResults(nagpurResults);
-      } catch (error) {
-        if (error.name !== "AbortError") {
-          console.error(error);
-          setSearchError(
-            "Unable to search Nagpur locations right now."
-          );
-        }
-      } finally {
-        setLoadingAreas(false);
-      }
-    }, 700);
-
-    return () => {
-      clearTimeout(timer);
-      controller.abort();
-    };
-  }, [areaQuery]);
-
-  /*
-   * ---------------------------------------------------------
-   * SEARCH ROADS/STREETS INSIDE SELECTED AREA
-   * ---------------------------------------------------------
-   */
-
-  useEffect(() => {
     if (
-      !selectedArea ||
-      !roadQuery.trim()
+      !searchQuery.trim()
     ) {
-      setRoadResults([]);
+      setSearchResults([]);
       return;
     }
 
-    const controller = new AbortController();
+    /*
+     * Don't search again after the user
+     * has selected an exact result.
+     */
 
-    const timer = setTimeout(async () => {
-      try {
-        setLoadingRoads(true);
-        setSearchError("");
+    if (
+      searchQuery ===
+        location?.displayName ||
+      searchQuery ===
+        location?.street ||
+      searchQuery ===
+        location?.area
+    ) {
+      return;
+    }
 
-        const searchText =
-          `${roadQuery}, ${selectedArea}, Nagpur, Maharashtra, India`;
+    const controller =
+      new AbortController();
 
-        const params = new URLSearchParams({
-          q: searchText,
-          format: "jsonv2",
-          addressdetails: "1",
-          limit: "10",
-          countrycodes: "in",
-          layer: "address",
-        });
+    const timer =
+      setTimeout(
+        async () => {
 
-        const response = await fetch(
-          `https://nominatim.openstreetmap.org/search?${params}`,
-          {
-            signal: controller.signal,
-            headers: {
-              Accept: "application/json",
-            },
+          try {
+
+            setLoadingSearch(true);
+            setSearchError("");
+
+            const params =
+              new URLSearchParams({
+                q:
+                  `${searchQuery}, Nagpur, Maharashtra, India`,
+
+                format:
+                  "jsonv2",
+
+                addressdetails:
+                  "1",
+
+                limit:
+                  "10",
+
+                countrycodes:
+                  "in",
+
+                /*
+                 * Bounding box restricts
+                 * results to Nagpur.
+                 *
+                 * The actual final filter
+                 * below provides another
+                 * layer of protection.
+                 */
+                viewbox:
+                  `${NAGPUR_BOUNDS.west},${NAGPUR_BOUNDS.north},${NAGPUR_BOUNDS.east},${NAGPUR_BOUNDS.south}`,
+
+                bounded:
+                  "1",
+              });
+
+
+            const response =
+              await fetch(
+                `https://nominatim.openstreetmap.org/search?${params}`,
+                {
+                  signal:
+                    controller.signal,
+
+                  headers: {
+                    Accept:
+                      "application/json",
+                  },
+                }
+              );
+
+
+            if (
+              !response.ok
+            ) {
+              throw new Error(
+                "Location search failed."
+              );
+            }
+
+
+            const data =
+              await response.json();
+
+
+            /*
+             * ------------------------------------------------
+             * Nagpur-only filtering
+             * ------------------------------------------------
+             */
+
+            const nagpurResults =
+              data.filter(
+                (item) => {
+
+                  const address =
+                    item.address ||
+                    {};
+
+                  const city =
+                    (
+                      address.city ||
+                      address.town ||
+                      address.municipality ||
+                      ""
+                    ).toLowerCase();
+
+                  const display =
+                    (
+                      item.display_name ||
+                      ""
+                    ).toLowerCase();
+
+                  const lat =
+                    Number(
+                      item.lat
+                    );
+
+                  const lng =
+                    Number(
+                      item.lon
+                    );
+
+                  const insideBounds =
+                    Number.isFinite(
+                      lat
+                    ) &&
+                    Number.isFinite(
+                      lng
+                    ) &&
+                    lat >=
+                      NAGPUR_BOUNDS.south &&
+                    lat <=
+                      NAGPUR_BOUNDS.north &&
+                    lng >=
+                      NAGPUR_BOUNDS.west &&
+                    lng <=
+                      NAGPUR_BOUNDS.east;
+
+
+                  return (
+                    insideBounds &&
+                    (
+                      city.includes(
+                        "nagpur"
+                      ) ||
+                      display.includes(
+                        "nagpur"
+                      )
+                    )
+                  );
+                }
+              );
+
+
+            /*
+             * ------------------------------------------------
+             * Remove police stations.
+             * ------------------------------------------------
+             */
+
+            const filteredResults =
+              nagpurResults.filter(
+                (item) => {
+
+                  const type =
+                    (
+                      item.type ||
+                      ""
+                    ).toLowerCase();
+
+                  const category =
+                    (
+                      item.category ||
+                      ""
+                    ).toLowerCase();
+
+                  const name =
+                    (
+                      item.display_name ||
+                      ""
+                    ).toLowerCase();
+
+
+                  const isPoliceStation =
+                    type.includes(
+                      "police"
+                    ) ||
+                    category.includes(
+                      "police"
+                    ) ||
+                    name.includes(
+                      "police station"
+                    );
+
+
+                  return (
+                    !isPoliceStation
+                  );
+                }
+              );
+
+
+            setSearchResults(
+              filteredResults
+            );
+
+          } catch (
+            error
+          ) {
+
+            if (
+              error.name !==
+              "AbortError"
+            ) {
+
+              console.error(
+                error
+              );
+
+              setSearchError(
+                "Unable to search Nagpur locations right now."
+              );
+            }
+
+          } finally {
+
+            setLoadingSearch(
+              false
+            );
           }
-        );
 
-        if (!response.ok) {
-          throw new Error(
-            "Road search failed."
-          );
-        }
+        },
+        500
+      );
 
-        const data = await response.json();
-
-        const roadResultsFiltered =
-          data.filter((item) => {
-            const address =
-              item.address || {};
-
-            const city =
-              address.city ||
-              address.town ||
-              address.municipality ||
-              "";
-
-            return city
-              .toLowerCase()
-              .includes("nagpur");
-          });
-
-        setRoadResults(
-          roadResultsFiltered
-        );
-      } catch (error) {
-        if (error.name !== "AbortError") {
-          console.error(error);
-
-          setSearchError(
-            "Unable to search roads right now."
-          );
-        }
-      } finally {
-        setLoadingRoads(false);
-      }
-    }, 700);
 
     return () => {
-      clearTimeout(timer);
+
+      clearTimeout(
+        timer
+      );
+
       controller.abort();
+
     };
+
   }, [
-    selectedArea,
-    roadQuery,
+    searchQuery,
+    location?.displayName,
+    location?.street,
+    location?.area,
   ]);
 
+
   /*
-   * ---------------------------------------------------------
-   * SELECT AREA
-   * ---------------------------------------------------------
+   * =========================================================
+   * SEARCH RESULT SELECTION
+   * =========================================================
    */
 
-  function handleAreaSelect(result) {
-    const address =
-      result.address || {};
+  function handleSearchSelect(
+    result
+  ) {
 
-    const areaName =
-      address.suburb ||
-      address.neighbourhood ||
-      address.city_district ||
-      address.quarter ||
-      result.display_name;
+    const address =
+      result.address ||
+      {};
 
     const lat =
-      Number(result.lat);
+      Number(
+        result.lat
+      );
 
     const lng =
-      Number(result.lon);
+      Number(
+        result.lon
+      );
 
-    setSelectedArea(areaName);
-    setSelectedRoad("");
 
-    setAreaQuery(areaName);
-    setRoadQuery("");
-
-    setAreaResults([]);
-    setRoadResults([]);
-
-    setLocation({
-      scope: "area",
-      area: areaName,
-      street: "",
-      displayName: areaName,
-      lat,
-      lng,
-      zoom: 14,
-    });
-  }
-
-  /*
-   * ---------------------------------------------------------
-   * SELECT ROAD
-   * ---------------------------------------------------------
-   */
-
-  function handleRoadSelect(result) {
-    const address =
-      result.address || {};
-
-    const roadName =
+    const road =
       address.road ||
-      result.display_name;
+      "";
 
-    const areaName =
+
+    const area =
       address.suburb ||
       address.neighbourhood ||
       address.city_district ||
       address.quarter ||
-      selectedArea;
+      "";
 
-    const lat =
-      Number(result.lat);
 
-    const lng =
-      Number(result.lon);
+    const resultName =
+      result.name ||
+      result.display_name ||
+      "";
 
-    setSelectedArea(areaName);
-    setSelectedRoad(roadName);
 
-    setRoadQuery(roadName);
+    const type =
+      (
+        result.type ||
+        ""
+      ).toLowerCase();
 
-    setRoadResults([]);
+
+    const roadTypes = [
+      "road",
+      "residential",
+      "tertiary",
+      "secondary",
+      "primary",
+      "pedestrian",
+      "living_street",
+      "service",
+      "unclassified",
+      "path",
+      "footway",
+      "cycleway",
+      "track",
+    ];
+
+
+    /*
+     * --------------------------------------------------------
+     * Nagpur city itself
+     * --------------------------------------------------------
+     */
+
+    const isNagpur =
+      resultName
+        .toLowerCase()
+        .trim() ===
+        "nagpur";
+
+
+    if (
+      isNagpur &&
+      !road
+    ) {
+
+      setLocation({
+        scope:
+          "nagpur",
+
+        area:
+          "",
+
+        street:
+          "",
+
+        policeStation:
+          "",
+
+        displayName:
+          "Entire Nagpur City",
+
+        lat:
+          Number.isFinite(
+            lat
+          )
+            ? lat
+            : null,
+
+        lng:
+          Number.isFinite(
+            lng
+          )
+            ? lng
+            : null,
+
+        zoom:
+          11,
+
+        source:
+          "search",
+      });
+
+
+      setSearchQuery(
+        "Nagpur"
+      );
+
+      setSearchResults(
+        []
+      );
+
+      return;
+    }
+
+
+    /*
+     * --------------------------------------------------------
+     * Street / Road
+     * --------------------------------------------------------
+     */
+
+    if (
+      road &&
+      roadTypes.includes(
+        type
+      )
+    ) {
+
+      setLocation({
+        scope:
+          "street",
+
+        area:
+          area,
+
+        street:
+          road,
+
+        policeStation:
+          "",
+
+        displayName:
+          road,
+
+        lat:
+          lat,
+
+        lng:
+          lng,
+
+        zoom:
+          17,
+
+        source:
+          "search",
+      });
+
+
+      setSearchQuery(
+        road
+      );
+
+      setSearchResults(
+        []
+      );
+
+      return;
+    }
+
+
+    /*
+     * --------------------------------------------------------
+     * Area
+     * --------------------------------------------------------
+     */
+
+    const areaName =
+      area ||
+      resultName;
+
 
     setLocation({
-      scope: "road",
-      area: areaName,
-      street: roadName,
-      displayName: roadName,
-      lat,
-      lng,
-      zoom: 17,
+      scope:
+        "area",
+
+      area:
+        areaName,
+
+      street:
+        "",
+
+      policeStation:
+        "",
+
+      displayName:
+        areaName,
+
+      lat:
+        lat,
+
+      lng:
+        lng,
+
+      zoom:
+        14,
+
+      source:
+        "search",
     });
+
+
+    setSearchQuery(
+      areaName
+    );
+
+    setSearchResults(
+      []
+    );
   }
 
+
   /*
-   * ---------------------------------------------------------
-   * RESET SEARCH
-   * ---------------------------------------------------------
+   * =========================================================
+   * CLEAR SEARCH
+   * =========================================================
    */
 
-  function handleResetSearch() {
-    setAreaQuery("");
-    setRoadQuery("");
+  function handleClearSearch() {
 
-    setSelectedArea("");
-    setSelectedRoad("");
+    setSearchQuery("");
 
-    setAreaResults([]);
-    setRoadResults([]);
+    setSearchResults([]);
 
     setSearchError("");
 
     setLocation({
-      scope: "nagpur",
-      area: "",
-      street: "",
-      displayName: "Entire Nagpur City",
-      lat: null,
-      lng: null,
-      zoom: 11,
+      scope:
+        "nagpur",
+
+      area:
+        "",
+
+      street:
+        "",
+
+      policeStation:
+        "",
+
+      displayName:
+        "Entire Nagpur City",
+
+      lat:
+        null,
+
+      lng:
+        null,
+
+      zoom:
+        11,
+
+      source:
+        "default",
     });
   }
 
+
   /*
-   * ---------------------------------------------------------
-   * TRAFFIC DATA
-   * ---------------------------------------------------------
+   * =========================================================
+   * VISIBLE INCIDENTS
+   * =========================================================
+   */
+
+  const visibleIncidents =
+    useMemo(
+      () => {
+
+        /*
+         * No selected area/street.
+         *
+         * Selected-location data should not
+         * appear.
+         */
+
+        if (
+          !hasSelectedLocation
+        ) {
+          return [];
+        }
+
+
+        /*
+         * Street
+         */
+
+        if (
+          selectedRoad
+        ) {
+
+          const road =
+            selectedRoad
+              .toLowerCase();
+
+          return incidents.filter(
+            (incident) => {
+
+              const incidentRoad =
+                (
+                  incident.road ||
+                  ""
+                ).toLowerCase();
+
+              return (
+                incidentRoad ===
+                  road ||
+                incidentRoad.includes(
+                  road
+                ) ||
+                road.includes(
+                  incidentRoad
+                )
+              );
+            }
+          );
+        }
+
+
+        /*
+         * Area
+         */
+
+        if (
+          selectedArea
+        ) {
+
+          const area =
+            selectedArea
+              .toLowerCase();
+
+          return incidents.filter(
+            (incident) => {
+
+              const incidentArea =
+                (
+                  incident.area ||
+                  ""
+                ).toLowerCase();
+
+              return (
+                incidentArea ===
+                  area ||
+                incidentArea.includes(
+                  area
+                ) ||
+                area.includes(
+                  incidentArea
+                )
+              );
+            }
+          );
+        }
+
+
+        return [];
+
+      },
+      [
+        hasSelectedLocation,
+        selectedArea,
+        selectedRoad,
+      ]
+    );
+
+
+  /*
+   * =========================================================
+   * ACCIDENTS
+   * =========================================================
+   */
+
+  const selectedAccidents =
+    visibleIncidents.filter(
+      (incident) =>
+        (
+          incident.type ||
+          ""
+        ).toLowerCase() ===
+        "accident"
+    );
+
+
+  /*
+   * =========================================================
+   * EMERGENCY ALERT
+   * =========================================================
+   */
+
+  const latestAccident =
+    selectedAccidents
+      .slice()
+      .sort(
+        (
+          first,
+          second
+        ) => {
+
+          const firstTime =
+            new Date(
+              first.timestamp ||
+                first.time ||
+                0
+            ).getTime();
+
+          const secondTime =
+            new Date(
+              second.timestamp ||
+                second.time ||
+                0
+            ).getTime();
+
+          return (
+            secondTime -
+            firstTime
+          );
+        }
+      )[0] ||
+    null;
+
+
+  /*
+   * =========================================================
+   * SELECTED LOCATION METRICS
+   * =========================================================
    */
 
   const trafficDensity =
-    selectedAreaData?.trafficDensity ??
-    citySituation.trafficDensity ??
-    0;
+    hasSelectedLocation
+      ? (
+          selectedAreaData
+            ?.trafficDensity ??
+          0
+        )
+      : 0;
+
 
   const riskScore =
-    selectedAreaData?.riskScore ??
-    Math.round(
-      trafficDensity * 0.8 +
-        (citySituation.highRiskAreas || 0) * 2
-    );
+    hasSelectedLocation
+      ? (
+          selectedAreaData
+            ?.riskScore ??
+          Math.round(
+            trafficDensity *
+              0.8
+          )
+        )
+      : 0;
+
 
   const policeAllocated =
-    selectedAreaData?.policeAllocated ??
-    citySituation.policeDeployed ??
-    0;
+    hasSelectedLocation
+      ? (
+          selectedAreaData
+            ?.policeAllocated ??
+          0
+        )
+      : 0;
+
 
   const policeRequired =
-    selectedAreaData?.policeRequired ??
-    citySituation.policeRequired ??
-    0;
+    hasSelectedLocation
+      ? (
+          selectedAreaData
+            ?.policeRequired ??
+          0
+        )
+      : 0;
 
-  const policeGap = Math.max(
-    policeRequired -
-      policeAllocated,
-    0
-  );
+
+  const policeGap =
+    Math.max(
+      policeRequired -
+        policeAllocated,
+      0
+    );
+
 
   /*
-   * ---------------------------------------------------------
+   * =========================================================
    * TRAFFIC RANKING
-   *
-   * For now this is calculated from the available
-   * areaSituation data.
-   *
-   * Later backend will calculate the actual ranking
-   * from real traffic data.
-   * ---------------------------------------------------------
+   * =========================================================
    */
 
   const trafficRanking =
-    calculateTrafficRanking(
-      selectedArea
-    );
+    hasSelectedLocation
+      ? calculateTrafficRanking(
+          selectedArea
+        )
+      : null;
+
 
   /*
-   * ---------------------------------------------------------
-   * CCTV DATA
-   *
-   * Uses the CCTV data if your mock data already contains it.
-   * Otherwise an empty list is shown rather than inventing
-   * cameras.
-   * ---------------------------------------------------------
+   * =========================================================
+   * CCTV
+   * =========================================================
    */
 
   const cctvCameras =
-    selectedAreaData?.cctv ||
-    selectedAreaData?.cameras ||
-    [];
+    hasSelectedLocation
+      ? (
+          selectedAreaData?.cctv ||
+          selectedAreaData?.cameras ||
+          []
+        )
+      : [];
+
 
   /*
-   * ---------------------------------------------------------
-   * OVERALL NAGPUR DATA
-   * ---------------------------------------------------------
+   * =========================================================
+   * OVERALL NAGPUR INFORMATION
+   * =========================================================
    */
 
   const nagpurAccidents =
     incidents.filter(
       (incident) =>
-        incident.type ===
-        "Accident"
+        (
+          incident.type ||
+          ""
+        ).toLowerCase() ===
+        "accident"
     ).length;
+
 
   const nagpurCriticalIncidents =
     incidents.filter(
       (incident) =>
-        incident.severity ===
-        "Critical"
+        (
+          incident.severity ||
+          ""
+        ).toLowerCase() ===
+        "critical"
     ).length;
+
 
   const nagpurHighRiskAreas =
     citySituation.highRiskAreas ||
     0;
 
+
+  /*
+   * =========================================================
+   * RENDER
+   * =========================================================
+   */
+
   return (
     <div className="space-y-6 p-4 md:p-6 lg:p-8">
 
       {/* =====================================================
-          HEADER
+          SEARCH
       ====================================================== */}
 
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
 
-        <div>
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">
-            VIGIL Command Dashboard
-          </p>
-
-          <h1 className="mt-1 text-2xl font-bold text-slate-900 md:text-3xl">
-            Nagpur Traffic Intelligence
-          </h1>
-
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-500">
-            Search a Nagpur area and then select a
-            road or street to inspect its traffic
-            conditions, risk level, police deployment
-            and CCTV coverage.
-          </p>
-        </div>
-
-      </section>
-
-
-      {/* =====================================================
-          LOCATION SEARCH
-      ====================================================== */}
-
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-
-        <div className="mb-4">
-
-          <h2 className="text-lg font-bold text-slate-900">
-            Search Nagpur Location
-          </h2>
-
-          <p className="mt-1 text-xs text-slate-500">
-            First select an area, then select a road
-            or street inside that area.
-          </p>
-
-        </div>
-
-
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-
-          {/* AREA SEARCH */}
+        <div className="relative">
 
           <div className="relative">
 
-            <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-slate-500">
-              Nagpur Area
-            </label>
-
-            <div className="relative">
-
-              <input
-                type="text"
-                value={areaQuery}
-                onChange={(event) =>
-                  setAreaQuery(
-                    event.target.value
-                  )
-                }
-                placeholder="Search area, neighbourhood..."
-                className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-              />
-
-              {loadingAreas && (
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-slate-400">
-                  Searching...
-                </span>
-              )}
-
-            </div>
+            <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg text-slate-400">
+              🔍
+            </span>
 
 
-            {areaResults.length > 0 && (
-              <SearchResults
-                results={areaResults}
-                type="area"
-                onSelect={handleAreaSelect}
-              />
-            )}
-
-          </div>
-
-
-          {/* ROAD SEARCH */}
-
-          <div className="relative">
-
-            <label className="mb-2 block text-xs font-bold uppercase tracking-wide text-slate-500">
-              Road / Street
-            </label>
-
-            <div className="relative">
-
-              <input
-                type="text"
-                value={roadQuery}
-                disabled={!selectedArea}
-                onChange={(event) =>
-                  setRoadQuery(
-                    event.target.value
-                  )
-                }
-                placeholder={
-                  selectedArea
-                    ? "Search road or street..."
-                    : "Select an area first"
-                }
-                className={`w-full rounded-xl border px-4 py-3 text-sm outline-none transition ${
-                  selectedArea
-                    ? "border-slate-300 bg-white text-slate-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
-                    : "cursor-not-allowed border-slate-200 bg-slate-100 text-slate-400"
-                }`}
-              />
-
-              {loadingRoads && (
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-slate-400">
-                  Searching...
-                </span>
-              )}
-
-            </div>
-
-
-            {roadResults.length > 0 && (
-              <SearchResults
-                results={roadResults}
-                type="road"
-                onSelect={handleRoadSelect}
-              />
-            )}
-
-          </div>
-
-        </div>
-
-
-        {/* CURRENT LOCATION */}
-
-        <div className="mt-5 flex flex-col gap-3 rounded-xl bg-slate-50 p-4 md:flex-row md:items-center md:justify-between">
-
-          <div>
-
-            <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">
-              Current Monitoring Location
-            </p>
-
-            <p className="mt-1 text-sm font-bold text-slate-800">
-              {selectedRoad ||
-                selectedArea ||
-                "Entire Nagpur City"}
-            </p>
-
-            {selectedRoad && (
-              <p className="mt-1 text-xs text-slate-500">
-                Area: {selectedArea}
-              </p>
-            )}
-
-          </div>
-
-
-          {(selectedArea ||
-            selectedRoad) && (
-            <button
-              type="button"
-              onClick={
-                handleResetSearch
+            <input
+              type="text"
+              value={
+                searchQuery
               }
-              className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-xs font-bold text-slate-600 transition hover:bg-slate-100"
-            >
-              Clear Search
-            </button>
+              onChange={(
+                event
+              ) =>
+                setSearchQuery(
+                  event.target.value
+                )
+              }
+              placeholder="Search Nagpur area or street..."
+              className="w-full rounded-xl border border-slate-300 bg-white py-3 pl-11 pr-24 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+            />
+
+
+            {loadingSearch && (
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-slate-400">
+                Searching...
+              </span>
+            )}
+
+
+            {searchQuery &&
+              !loadingSearch && (
+                <button
+                  type="button"
+                  onClick={
+                    handleClearSearch
+                  }
+                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg px-2 py-1 text-xs font-bold text-slate-500 hover:bg-slate-100"
+                >
+                  Clear
+                </button>
+              )}
+
+          </div>
+
+
+          {searchResults.length >
+            0 && (
+            <SearchResults
+              results={
+                searchResults
+              }
+              onSelect={
+                handleSearchSelect
+              }
+            />
           )}
 
         </div>
@@ -650,98 +1017,173 @@ function Dashboard() {
 
 
       {/* =====================================================
-          SELECTED ROAD INFORMATION
+          EMERGENCY ALERT
       ====================================================== */}
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      {hasSelectedLocation &&
+        latestAccident && (
 
-        <div className="mb-5">
+        <section className="rounded-2xl border border-red-200 bg-red-50 p-5">
 
-          <p className="text-xs font-bold uppercase tracking-wide text-blue-600">
-            Selected Location
-          </p>
+          <div className="flex items-start gap-4">
 
-          <h2 className="mt-1 text-xl font-bold text-slate-900">
-            {selectedRoad ||
-              selectedArea ||
-              "Entire Nagpur City"}
-          </h2>
-
-          {selectedRoad && (
-            <p className="mt-1 text-xs text-slate-500">
-              {selectedArea}
-            </p>
-          )}
-
-        </div>
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-600 text-xl">
+              🚨
+            </div>
 
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
+            <div>
 
-          <MetricCard
-            title="Traffic Density"
-            value={`${trafficDensity}%`}
-            icon="🚦"
-          />
-
-          <MetricCard
-            title="Police Allocated"
-            value={policeAllocated}
-            icon="👮"
-          />
-
-          <MetricCard
-            title="Police Needed"
-            value={policeRequired}
-            icon="👮"
-          />
-
-          <MetricCard
-            title="Traffic Risk"
-            value={`${Math.min(
-              riskScore,
-              100
-            )}/100`}
-            icon="⚠️"
-            valueClass={
-              riskScore >= 85
-                ? "text-red-600"
-                : riskScore >= 70
-                ? "text-orange-600"
-                : "text-green-600"
-            }
-          />
-
-          <MetricCard
-            title="Traffic Ranking"
-            value={
-              trafficRanking
-                ? `#${trafficRanking}`
-                : "N/A"
-            }
-            icon="🏆"
-          />
-
-        </div>
+              <p className="text-xs font-bold uppercase tracking-wide text-red-700">
+                Emergency Alert
+              </p>
 
 
-        {policeGap > 0 && (
-          <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-4">
+              <h2 className="mt-1 text-lg font-bold text-red-900">
+                Accident detected
+              </h2>
 
-            <p className="text-sm font-bold text-red-800">
-              Police Deployment Gap
-            </p>
 
-            <p className="mt-1 text-xs text-red-700">
-              {policeGap} additional officer
-              {policeGap > 1 ? "s" : ""} required
-              based on the current available data.
-            </p>
+              <p className="mt-1 text-sm text-red-800">
+                {latestAccident.road ||
+                  latestAccident.area ||
+                  location.displayName}
+              </p>
+
+
+              {latestAccident.severity && (
+                <p className="mt-1 text-xs font-semibold text-red-700">
+                  Severity:{" "}
+                  {
+                    latestAccident.severity
+                  }
+                </p>
+              )}
+
+            </div>
 
           </div>
-        )}
 
-      </section>
+        </section>
+
+      )}
+
+
+      {/* =====================================================
+          SELECTED LOCATION DATA
+      ====================================================== */}
+
+      {hasSelectedLocation && (
+
+        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+
+          <div className="mb-5">
+
+            <p className="text-xs font-bold uppercase tracking-wide text-blue-600">
+              Selected Location
+            </p>
+
+
+            <h2 className="mt-1 text-xl font-bold text-slate-900">
+              {selectedRoad ||
+                selectedArea}
+            </h2>
+
+
+            {selectedRoad &&
+              selectedArea && (
+                <p className="mt-1 text-xs text-slate-500">
+                  {selectedArea}
+                </p>
+              )}
+
+          </div>
+
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5">
+
+            <MetricCard
+              title="Traffic Density"
+              value={`${trafficDensity}%`}
+              icon="🚦"
+            />
+
+
+            <MetricCard
+              title="Police Allocated"
+              value={
+                policeAllocated
+              }
+              icon="👮"
+            />
+
+
+            <MetricCard
+              title="Police Needed"
+              value={
+                policeRequired
+              }
+              icon="👮"
+            />
+
+
+            <MetricCard
+              title="Traffic Risk"
+              value={`${Math.min(
+                riskScore,
+                100
+              )}/100`}
+              icon="⚠️"
+              valueClass={
+                riskScore >= 70
+                  ? "text-red-600"
+                  : riskScore >= 40
+                  ? "text-orange-600"
+                  : "text-green-600"
+              }
+            />
+
+
+            <MetricCard
+              title="Traffic Ranking"
+              value={
+                trafficRanking
+                  ? `#${trafficRanking}`
+                  : "N/A"
+              }
+              icon="🏆"
+            />
+
+          </div>
+
+
+          {policeGap > 0 && (
+
+            <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-4">
+
+              <p className="text-sm font-bold text-red-800">
+                Police Deployment Gap
+              </p>
+
+
+              <p className="mt-1 text-xs text-red-700">
+                {policeGap} additional
+                officer
+                {policeGap > 1
+                  ? "s"
+                  : ""}{" "}
+                required based on
+                the current available
+                data.
+              </p>
+
+            </div>
+
+          )}
+
+        </section>
+
+      )}
 
 
       {/* =====================================================
@@ -754,40 +1196,34 @@ function Dashboard() {
 
           <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
 
-            <div>
-
-              <h2 className="font-bold text-slate-900">
-                Nagpur Traffic Risk Map
-              </h2>
-
-              <p className="mt-1 text-xs text-slate-500">
-                The map automatically moves to the
-                selected Nagpur location.
-              </p>
-
-            </div>
+            <h2 className="font-bold text-slate-900">
+              Nagpur Traffic Risk Map
+            </h2>
 
 
-            <div className="flex items-center gap-3 text-[10px] font-semibold text-slate-500">
+            <div className="flex flex-wrap items-center gap-3 text-[10px] font-semibold text-slate-500">
 
               <span className="flex items-center gap-1">
                 <span className="h-2.5 w-2.5 rounded-full bg-green-500" />
                 Low
               </span>
 
+
               <span className="flex items-center gap-1">
                 <span className="h-2.5 w-2.5 rounded-full bg-yellow-400" />
-                No/Low Data
+                No Data
               </span>
+
 
               <span className="flex items-center gap-1">
                 <span className="h-2.5 w-2.5 rounded-full bg-orange-500" />
-                High
+                Moderate
               </span>
+
 
               <span className="flex items-center gap-1">
                 <span className="h-2.5 w-2.5 rounded-full bg-red-600" />
-                Critical
+                High
               </span>
 
             </div>
@@ -799,11 +1235,7 @@ function Dashboard() {
 
         <div className="h-[520px]">
 
-          <NagpurMap
-            selectedLocation={
-              location
-            }
-          />
+          <NagpurMap />
 
         </div>
 
@@ -814,75 +1246,84 @@ function Dashboard() {
           CCTV
       ====================================================== */}
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      {hasSelectedLocation && (
 
-        <div className="mb-5">
+        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
 
-          <p className="text-xs font-bold uppercase tracking-wide text-blue-600">
-            CCTV Coverage
-          </p>
+          <div className="mb-5">
 
-          <h2 className="mt-1 text-xl font-bold text-slate-900">
-            Cameras on{" "}
-            {selectedRoad ||
-              selectedArea ||
-              "Selected Location"}
-          </h2>
-
-        </div>
+            <p className="text-xs font-bold uppercase tracking-wide text-blue-600">
+              CCTV Coverage
+            </p>
 
 
-        {cctvCameras.length > 0 ? (
-
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-
-            {cctvCameras.map(
-              (camera, index) => (
-                <CCTVCard
-                  key={
-                    camera.id ||
-                    camera.cameraNo ||
-                    index
-                  }
-                  camera={
-                    camera
-                  }
-                />
-              )
-            )}
+            <h2 className="mt-1 text-xl font-bold text-slate-900">
+              Cameras on{" "}
+              {selectedRoad ||
+                selectedArea}
+            </h2>
 
           </div>
 
-        ) : (
 
-          <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+          {cctvCameras.length >
+          0 ? (
 
-            <div className="text-3xl">
-              📹
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+
+              {cctvCameras.map(
+                (
+                  camera,
+                  index
+                ) => (
+
+                  <CCTVCard
+                    key={
+                      camera.id ||
+                      camera.cameraNo ||
+                      index
+                    }
+                    camera={
+                      camera
+                    }
+                  />
+
+                )
+              )}
+
             </div>
 
-            <p className="mt-3 text-sm font-bold text-slate-700">
-              CCTV data not available
-            </p>
+          ) : (
 
-            <p className="mx-auto mt-1 max-w-lg text-xs leading-5 text-slate-500">
-              No CCTV camera record is currently
-              available in the frontend dataset for
-              this location. We should connect this
-              section to the VIGIL backend/CCTV
-              database rather than displaying
-              invented camera information.
-            </p>
+            <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
 
-          </div>
+              <div className="text-3xl">
+                📹
+              </div>
 
-        )}
 
-      </section>
+              <p className="mt-3 text-sm font-bold text-slate-700">
+                CCTV data not available
+              </p>
+
+
+              <p className="mx-auto mt-1 max-w-lg text-xs leading-5 text-slate-500">
+                No CCTV camera record is
+                currently available for
+                this location.
+              </p>
+
+            </div>
+
+          )}
+
+        </section>
+
+      )}
 
 
       {/* =====================================================
-          OVERALL NAGPUR SITUATION
+          OVERALL NAGPUR INFORMATION
       ====================================================== */}
 
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
@@ -893,13 +1334,15 @@ function Dashboard() {
             City-Wide Intelligence
           </p>
 
+
           <h2 className="mt-1 text-xl font-bold text-slate-900">
             Overall Nagpur Traffic Situation
           </h2>
 
+
           <p className="mt-1 text-xs text-slate-500">
-            Overall traffic and incident indicators
-            across Nagpur city.
+            Overall traffic and incident
+            indicators across Nagpur city.
           </p>
 
         </div>
@@ -913,12 +1356,16 @@ function Dashboard() {
             icon="🚦"
           />
 
+
           <MetricCard
             title="Accidents"
-            value={nagpurAccidents}
+            value={
+              nagpurAccidents
+            }
             icon="🚑"
             valueClass="text-red-600"
           />
+
 
           <MetricCard
             title="Critical Incidents"
@@ -928,6 +1375,7 @@ function Dashboard() {
             icon="🚨"
             valueClass="text-red-600"
           />
+
 
           <MetricCard
             title="High-Risk Areas"
@@ -943,21 +1391,25 @@ function Dashboard() {
       </section>
 
 
-      {/* OSM ATTRIBUTION / DATA NOTE */}
+      {/* =====================================================
+          OSM ATTRIBUTION
+      ====================================================== */}
 
       <div className="px-1 pb-4 text-[10px] leading-5 text-slate-400">
 
         <p>
-          Location search and map data may use
-          OpenStreetMap data. © OpenStreetMap
-          contributors.
+          Location search and map data may
+          use OpenStreetMap data. ©
+          OpenStreetMap contributors.
         </p>
 
+
         <p>
-          Traffic, police deployment, incident and
-          CCTV values will be connected to the VIGIL
-          backend as the system moves from mock data
-          to live operational data.
+          Traffic, police deployment,
+          incident and CCTV values will be
+          connected to the VIGIL backend as
+          the system moves from mock data to
+          live operational data.
         </p>
 
       </div>
@@ -975,47 +1427,63 @@ function Dashboard() {
 
 function SearchResults({
   results,
-  type,
   onSelect,
 }) {
   return (
     <div className="absolute left-0 right-0 top-full z-[1000] mt-2 max-h-80 overflow-y-auto rounded-xl border border-slate-200 bg-white p-2 shadow-xl">
 
       {results.map(
-        (result, index) => (
-          <button
-            key={
-              `${result.place_id}-${index}`
-            }
-            type="button"
-            onClick={() =>
-              onSelect(result)
-            }
-            className="w-full rounded-lg px-3 py-3 text-left transition hover:bg-slate-50"
-          >
+        (
+          result,
+          index
+        ) => {
 
-            <p className="text-sm font-bold text-slate-800">
+          const address =
+            result.address ||
+            {};
 
-              {type === "road"
-                ? result.address
-                    ?.road ||
-                  result.display_name
-                : result.address
-                    ?.suburb ||
-                  result.address
-                    ?.neighbourhood ||
-                  result.address
-                    ?.city_district ||
-                  result.display_name}
+          const road =
+            address.road;
 
-            </p>
+          const area =
+            address.suburb ||
+            address.neighbourhood ||
+            address.city_district ||
+            address.quarter;
 
-            <p className="mt-1 line-clamp-2 text-[11px] leading-4 text-slate-500">
-              {result.display_name}
-            </p>
+          const title =
+            road ||
+            area ||
+            result.name ||
+            result.display_name;
 
-          </button>
-        )
+
+          return (
+
+            <button
+              key={`${result.place_id}-${index}`}
+              type="button"
+              onClick={() =>
+                onSelect(
+                  result
+                )
+              }
+              className="w-full rounded-lg px-3 py-3 text-left transition hover:bg-slate-50"
+            >
+
+              <p className="text-sm font-bold text-slate-800">
+                {title}
+              </p>
+
+
+              <p className="mt-1 line-clamp-2 text-[11px] leading-4 text-slate-500">
+                {result.display_name}
+              </p>
+
+            </button>
+
+          );
+        }
       )}
 
     </div>
@@ -1033,9 +1501,12 @@ function MetricCard({
   title,
   value,
   icon,
-  valueClass = "text-slate-900",
+  valueClass =
+    "text-slate-900",
 }) {
+
   return (
+
     <div className="rounded-xl border border-slate-200 bg-white p-4">
 
       <div className="flex items-start justify-between gap-3">
@@ -1046,6 +1517,7 @@ function MetricCard({
             {title}
           </p>
 
+
           <p
             className={`mt-2 text-2xl font-bold ${valueClass}`}
           >
@@ -1054,6 +1526,7 @@ function MetricCard({
 
         </div>
 
+
         <span className="text-xl">
           {icon}
         </span>
@@ -1061,6 +1534,7 @@ function MetricCard({
       </div>
 
     </div>
+
   );
 }
 
@@ -1074,17 +1548,21 @@ function MetricCard({
 function CCTVCard({
   camera,
 }) {
+
   const cameraNumber =
     camera.cameraNo ||
     camera.id ||
     "Unknown";
+
 
   const place =
     camera.place ||
     camera.location ||
     "Location unavailable";
 
+
   return (
+
     <div className="overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
 
       <div className="flex h-36 items-center justify-center bg-slate-900">
@@ -1094,6 +1572,7 @@ function CCTVCard({
           <div className="text-3xl">
             📹
           </div>
+
 
           <p className="mt-2 text-[10px] font-bold uppercase tracking-wide text-slate-400">
             CCTV Camera
@@ -1109,14 +1588,17 @@ function CCTVCard({
         <div className="flex items-center justify-between">
 
           <p className="text-sm font-bold text-slate-800">
-            Camera {cameraNumber}
+            Camera{" "}
+            {cameraNumber}
           </p>
+
 
           <span className="rounded-full bg-green-100 px-2 py-1 text-[9px] font-bold text-green-700">
             AVAILABLE
           </span>
 
         </div>
+
 
         <p className="mt-2 text-xs text-slate-500">
           {place}
@@ -1125,6 +1607,7 @@ function CCTVCard({
       </div>
 
     </div>
+
   );
 }
 
@@ -1132,35 +1615,49 @@ function CCTVCard({
 /*
  * ============================================================
  * TRAFFIC RANKING
- *
- * Uses the existing areaSituation object.
- * This is temporary frontend logic.
- * Backend will eventually calculate the real ranking.
  * ============================================================
  */
 
 function calculateTrafficRanking(
   currentArea
 ) {
-  if (!currentArea) {
+
+  if (
+    !currentArea
+  ) {
     return null;
   }
+
 
   const entries =
     Object.entries(
       areaSituation || {}
     );
 
-  if (!entries.length) {
+
+  if (
+    !entries.length
+  ) {
     return null;
   }
 
+
   const sorted =
     entries.sort(
-      ([, first], [, second]) =>
-        (second?.trafficDensity || 0) -
-        (first?.trafficDensity || 0)
+      (
+        [, first],
+        [, second]
+      ) =>
+        (
+          second?.trafficDensity ||
+          0
+        ) -
+        (
+          first?.trafficDensity ||
+          0
+        )
     );
+
 
   const index =
     sorted.findIndex(
@@ -1169,9 +1666,13 @@ function calculateTrafficRanking(
         currentArea.toLowerCase()
     );
 
-  if (index === -1) {
+
+  if (
+    index === -1
+  ) {
     return null;
   }
+
 
   return index + 1;
 }
