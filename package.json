@@ -1,24 +1,26 @@
 {
-  "name": "vnit",
+  "name": "vnit-traffic-police-ai",
+  "private": true,
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "directories": {
-    "test": "tests"
-  },
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/YusufJavedShiekh/VNIT.git"
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "leaflet": "^1.9.4",
+    "leaflet.heat": "^0.2.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-leaflet": "^5.0.0",
+    "react-router-dom": "^7.18.2",
+    "recharts": "^3.10.1",
+    "tailwindcss": "^4.3.3"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/YusufJavedShiekh/VNIT/issues"
-  },
-  "homepage": "https://github.com/YusufJavedShiekh/VNIT#readme"
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.2",
+    "vite": "^7.1.2"
+  }
 }
